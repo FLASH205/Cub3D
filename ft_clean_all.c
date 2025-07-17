@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:19:46 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/16 11:24:25 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/17 12:51:37 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 void	ft_clean_all(t_data *data)
 {
+	if (data->window)
+		mlx_destroy_window(data->mlx_ptr, data->window);
+	if (data->image->img)
+		mlx_destroy_image(data->mlx_ptr, data->image->img);
 	if (data->mlx_ptr)
 		free(data->mlx_ptr);
-	if (data->window)
-		free(data->window);
 }

@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/16 18:27:55 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/17 16:24:29 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	click_cross(t_data *data)
 
 int	ft_click_keys(int key, t_data *data)
 {
-	(void)data;
+	printf("key = %d\n", key);
 	if (key == ESC)
 		(ft_clean_all(data), exit(0));
 	return (1);
@@ -28,8 +28,8 @@ int	ft_click_keys(int key, t_data *data)
 
 void	get_positions(t_player *player, char c, int i, int j)
 {
-	player->pos.x = j;
-	player->pos.y = i;
+	player->pos.x = j * SIZE + SIZE / 2;
+	player->pos.y = i * SIZE + SIZE / 2;
 	if (c == 'N')
 	{
 		player->dir.x = 0;
@@ -75,33 +75,56 @@ void	init_map(char **map, t_data *data)
 	data->h_map = i;
 }
 
+int	create_new_img(t_data *data, t_image *image)
+{
+	int	g;
+
+	image->img =  mlx_new_image(data->mlx_ptr, data->w_map * SIZE, data->h_map * SIZE);
+	if (!image->img)
+		return (0);
+	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->l_size, &g);
+	return (1);
+}
+
 int	main(void)
 {
 	t_data	data;
+	//^		 char	*addr;
+	//^		 int	w = 32;
+	//^		 int	x = 2;
+	//^		 int y = 3;
+	//^		 addr + w * y + x + bpp;
+	//^		 *(int *)addr = i;
 	char	*map[] = {
-		"11111111111111",
-		"100000W0000001",
-		"10000000000001",
-		"10000000000001",
-		"10001000000001",
-		"10001000000001",
-		"11111111111111",
-		NULL};
-	data.player = malloc(sizeof(t_player));
-	if (!data.player)
-		return (1);
+		"11111111111111111111111111111111",
+		"10000000000000000000000000000001",
+		"10000000000000000000000000000001",
+		"10000000010000000000000000000001",
+		"10001000010000000000100000000001",
+		"10001000000000000000100001000001",
+		"1000100000000000000000001E100001",
+		"10000000000000000000000001000001",
+		"11111111111111111111111111111111",
+		NULL
+	};
+	data.map = map;
+	data.player = (t_player []){{}};
+	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
 	init_map(map, &data);
-	printf("position of player is: x = %.1f ; y = %.1f\n", data.player->pos.x, data.player->pos.y);
-	printf("direction of player is: dx = %.1f; dy = %.1f\n", data.player->dir.x, data.player->dir.y);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	data.window = mlx_new_window(data.mlx_ptr, data.w_map * 64, data.h_map * 64, "Cub3d");
+	data.window = mlx_new_window(data.mlx_ptr, data.w_map * SIZE, data.h_map * SIZE, "Cub3d");
 	if (!data.window)
 		return (ft_clean_all(&data), 1);
+	if (!create_new_img(&data, data.image))
+		return (ft_clean_all(&data), 1);
+	ft_draw_map(map, &data);
+	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_key_hook(data.window, ft_click_keys, &data);
+	mlx_hook(data.window, 2, 1L<<0, move_player, &data);
 	mlx_hook(data.window, 17, 0, click_cross, &data);
 	return (mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
 }
