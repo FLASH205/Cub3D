@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/17 16:24:29 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/18 19:54:57 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	click_cross(t_data *data)
 
 int	ft_click_keys(int key, t_data *data)
 {
-	printf("key = %d\n", key);
 	if (key == ESC)
 		(ft_clean_all(data), exit(0));
 	return (1);
@@ -33,12 +32,12 @@ void	get_positions(t_player *player, char c, int i, int j)
 	if (c == 'N')
 	{
 		player->dir.x = 0;
-		player->dir.y = 1;
+		player->dir.y = -1;
 	}
 	else if (c == 'S')
 	{
 		player->dir.x = 0;
-		player->dir.y = -1;
+		player->dir.y = 1;
 	}
 	else if (c == 'W')
 	{
@@ -86,7 +85,7 @@ int	create_new_img(t_data *data, t_image *image)
 	return (1);
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_data	data;
 	//^		 char	*addr;
@@ -100,19 +99,25 @@ int	main(void)
 		"10000000000000000000000000000001",
 		"10000000000000000000000000000001",
 		"10000000010000000000000000000001",
-		"10001000010000000000100000000001",
-		"10001000000000000000100001000001",
-		"1000100000000000000000001E100001",
-		"10000000000000000000000001000001",
+		"10001000010000001111100000000001",
+		"10001000000000001000100000000001",
+		"100010000000000010N0100010000001",
+		"10000000000000001000100001000001",
 		"11111111111111111111111111111111",
 		NULL
 	};
-	data.map = map;
+	if (ac != 2)
+		return (write(2, "Should be two arguments\n", 24), 1);
 	data.player = (t_player []){{}};
 	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
 	init_map(map, &data);
+	data.map = malloc(sizeof(char *) * (data.h_map + 1));
+	if (!data.map)
+		return (1);
+	if (!ft_read_file(&data, av[1]))
+		return (1);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
@@ -121,7 +126,7 @@ int	main(void)
 		return (ft_clean_all(&data), 1);
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
-	ft_draw_map(map, &data);
+	ft_draw_map(data.map, &data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_key_hook(data.window, ft_click_keys, &data);
 	mlx_hook(data.window, 2, 1L<<0, move_player, &data);

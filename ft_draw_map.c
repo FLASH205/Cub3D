@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/17 18:40:31 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/18 19:57:03 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,24 @@ void	setup_player(t_data *data, t_player *player)
 	int	j;
 	int	color;
 
-	i = 0;
-	while (i < 24)
+	int	r = 10;
+	int	center_x = player->pos.x;
+	int	center_y = player->pos.y;
+
+	i = -r;
+	while (i <= r)
 	{
-		j = 0;
-		while (j < 12)
+		j = -r;
+		while (j <= r)
 		{
-			if (i < 24 / 4 && (j >= 12 / 4 && j < 12 - 12 / 4))
-				color = 0xff0000;
-			else
-				color = 0x00ff33;
-			ft_put_pixel(data->image, color, (player->pos.x - 6 + j), (player->pos.y - 12 + i));
-			// mlx_pixel_put(data->mlx_ptr, data->window, (SIZE * x + j) + SIZE / 2, (SIZE * y + i) + SIZE / 2, 0x00ff33);
+			if (i * i + j * j <= r * r)
+			{
+				// if (i < -r / 2 && (j > -r / 2 && j < r / 2))
+				// 	color = 0xff0000;
+				// else
+					color = 0x00ff33;
+				ft_put_pixel(data->image, color, center_x + j, center_y + i);
+			}
 			j++;
 		}
 		i++;

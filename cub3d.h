@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/17 18:31:17 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/18 19:54:16 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <fcntl.h>
 # include <math.h>
 
 # ifndef BUFFER_SIZE
@@ -25,7 +26,7 @@
 
 # define ESC 53
 # define P_SPEED 8	//*	player speed
-# define ROT_SPEED 0.05	//*	rotate speed
+# define ROT_SPEED 0.5	//*	rotate speed
 # define SIZE 64
 # define UP 13
 # define DOWN 1
@@ -67,7 +68,8 @@ typedef struct s_data
 	t_image		*image;
 }	t_data;
 
-
+int		ft_read_file(t_data *data, char *file);
+char	*ft_strndup(char *str, int size);
 char	*get_next_line(int fd);
 char	*ft_strchr(char *str);
 char	*ft_strjoin(char *line, char *buff);
@@ -75,6 +77,6 @@ char	*ft_strdup(char *str);
 int		ft_strlen(char *str);
 void	ft_clean_all(t_data *data);
 void	ft_draw_map(char **map, t_data *data);
-void	setup_player(t_data *data, int x, int y);
+void	setup_player(t_data *data, t_player *player);
 int		move_player(int key, t_data *data);
 #endif
