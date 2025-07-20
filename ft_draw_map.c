@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/18 19:57:03 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/20 22:21:02 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	setup_player(t_data *data, t_player *player)
 {
 	int	i;
 	int	j;
-	int	color;
 
 	int	r = 10;
 	int	center_x = player->pos.x;
@@ -38,13 +37,7 @@ void	setup_player(t_data *data, t_player *player)
 		while (j <= r)
 		{
 			if (i * i + j * j <= r * r)
-			{
-				// if (i < -r / 2 && (j > -r / 2 && j < r / 2))
-				// 	color = 0xff0000;
-				// else
-					color = 0x00ff33;
-				ft_put_pixel(data->image, color, center_x + j, center_y + i);
-			}
+				ft_put_pixel(data->image, 0x00ff33, center_x + j, center_y + i);
 			j++;
 		}
 		i++;
@@ -72,6 +65,31 @@ void	setup_wall(t_data *data)
 	}
 }
 
+static int	is_wall(float x, float y, char **map)
+{
+	int map_x = (int)(x / SIZE);
+	int map_y = (int)(y / SIZE);
+
+	if (map[map_y] && map[map_y][map_x] && map[map_y][map_x] == '1')
+		return (1);
+	return (0);
+}
+
+void	draw_ray(t_data *data, t_player *player, float angle)
+{
+	float ray_x = player->pos.x;
+	float ray_y = player->pos.y;
+	float dx = cos(angle) * RAY_STEP;
+	float dy = sin(angle) * RAY_STEP;
+
+	while (!is_wall(ray_x, ray_y, data->map))
+	{
+		ft_put_pixel(data->image, 0xff0000, ray_x, ray_y);
+		ray_x += dx;
+		ray_y += dy;
+	}
+}
+
 void	ft_draw_map(char **map, t_data *data)
 {
 	int	i;
@@ -94,4 +112,6 @@ void	ft_draw_map(char **map, t_data *data)
 		data->add_y += SIZE;
 	}
 	setup_player(data, data->player);
+	float angle = atan2(data->player->dir.y, data->player->dir.x);
+	draw_ray(data, data->player, angle);
 }

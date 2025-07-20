@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/18 19:55:46 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/19 23:11:29 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,19 @@ void	ft_memset(void *str, int c, int size)
 		((char *)str)[i] = c;
 		i++;
 	}
-	
 }
 
 void	rotate_player(t_player *player, double angle)
 {
 	float	old_dir_x;
+	float	old_plane_x;
 
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cos(angle) - player->dir.y * sin(angle);
 	player->dir.y = old_dir_x * sin(angle) + player->dir.y * cos(angle);
+	old_plane_x = player->plane.x;
+	player->plane.x = player->plane.x * cos(angle) - player->plane.y * sin(angle);
+	player->plane.y = old_plane_x * sin(angle) + player->plane.y * cos(angle);
 }
 
 
@@ -45,49 +48,98 @@ void	rotate_player(t_player *player, double angle)
 // 	return (0);
 // }
 
-// int is_collision(float new_x, float new_y, char **map)
-// {
-// 	return (
-// 		is_wall(new_x + P_SPEED, new_y, map) ||
-// 		is_wall(new_x - P_SPEED, new_y, map) ||
-// 		is_wall(new_x, new_y + P_SPEED, map) ||
-// 		is_wall(new_x, new_y - P_SPEED, map)
-// 	);
-// }
+int	is_collision(float x, float y, char **map)
+{
+	int mx, my;
+
+	// Check left
+	mx = (int)((x - PLAYER_RADIUS) / SIZE);
+	my = (int)(y / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Check right
+	mx = (int)((x + PLAYER_RADIUS) / SIZE);
+	my = (int)(y / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Check up
+	mx = (int)(x / SIZE);
+	my = (int)((y - PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Check down
+	mx = (int)(x / SIZE);
+	my = (int)((y + PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// 🔁 Diagonal checks:
+
+	// Top-left
+	mx = (int)((x - PLAYER_RADIUS) / SIZE);
+	my = (int)((y - PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Top-right
+	mx = (int)((x + PLAYER_RADIUS) / SIZE);
+	my = (int)((y - PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Bottom-left
+	mx = (int)((x - PLAYER_RADIUS) / SIZE);
+	my = (int)((y + PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	// Bottom-right
+	mx = (int)((x + PLAYER_RADIUS) / SIZE);
+	my = (int)((y + PLAYER_RADIUS) / SIZE);
+	if (map[my][mx] == '1')
+		return (1);
+
+	return (0);
+}
 
 int	move_player(int key, t_data *data)
 {
 	t_player	*player;
-	// float		new_x;
-	// float		new_y;
+	float		new_x;
+	float		new_y;
 
 	player = data->player;
-	// new_x = player->pos.x;
-	// new_y = player->pos.y;
+
 	if (key == UP)
 	{
-		player->pos.x += player->dir.x * P_SPEED;
-		player->pos.y += player->dir.y * P_SPEED;
+		new_x = player->pos.x + player->dir.x * P_SPEED;
+		new_y = player->pos.y + player->dir.y * P_SPEED;
 	}
 	else if (key == DOWN)
 	{
-		player->pos.x -= player->dir.x * P_SPEED;
-		player->pos.y -= player->dir.y * P_SPEED;
+		new_x = player->pos.x - player->dir.x * P_SPEED;
+		new_y = player->pos.y - player->dir.y * P_SPEED;
 	}
-	else if (key == RIGHT || key == A_RIGHT)
+	else
 	{
-		rotate_player(player, ROT_SPEED);
-		// player->pos.x += P_SPEED;
+		new_x = player->pos.x;
+		new_y = player->pos.y;
+		if (key == RIGHT || key == A_RIGHT)
+			rotate_player(player, ROT_SPEED);
+		else if (key == LEFT || key == A_LEFT)
+			rotate_player(player, -ROT_SPEED);
 	}
-	else if (key == LEFT || key == A_LEFT)
-	{
-		rotate_player(player, -ROT_SPEED);
-		// player->pos.x -= P_SPEED;
-	}
-	// if (!is_collision(new_x, player->pos.y, data->map))
-	// 	player->pos.x = new_x;
-	// if (!is_collision(player->pos.x, new_y, data->map))
-	// 	player->pos.y = new_y;
+
+	// check collision before moving
+	if (!is_collision(new_x, player->pos.y, data->map))
+		player->pos.x = new_x;
+	if (!is_collision(player->pos.x, new_y, data->map))
+		player->pos.y = new_y;
+
+	// redraw
 	ft_memset(data->image->addr, 0, data->h_map * SIZE * data->w_map * SIZE * data->image->bpp / 8);
 	ft_draw_map(data->map, data);
 	mlx_put_image_to_window(data->mlx_ptr, data->window, data->image->img, 0, 0);

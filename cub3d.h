@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/18 19:54:16 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/20 22:27:54 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 #  define BUFFER_SIZE  1
 # endif
 
+# define PLAYER_RADIUS 6
 # define ESC 53
 # define P_SPEED 8	//*	player speed
-# define ROT_SPEED 0.5	//*	rotate speed
+# define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 64
 # define UP 13
 # define DOWN 1
@@ -34,6 +35,9 @@
 # define LEFT 0
 # define A_LEFT 123
 # define A_RIGHT 124
+# define FOV 60
+# define PI 3.14159265
+# define RAY_STEP 1
 
 typedef struct s_image
 {
@@ -53,6 +57,7 @@ typedef struct s_player
 {
 	t_vector	pos;
 	t_vector	dir;
+	t_vector	plane;
 }	t_player;
 
 typedef struct s_data
