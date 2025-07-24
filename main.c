@@ -6,11 +6,19 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/20 22:38:27 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/24 10:04:42 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	reset_ray_face(t_player *player)
+{
+	player->rayFaceRight = 0;
+	player->rayFaceLeft = 0;
+	player->rayFaceUp = 0;
+	player->rayFaceDown = 0;
+}
 
 int	click_cross(t_data *data)
 {
@@ -33,29 +41,29 @@ void	get_positions(t_player *player, char c, int i, int j)
 	{
 		player->dir.x = 0;
 		player->dir.y = -1;
-		player->plane.x = 0.66;
-		player->plane.y = 0;
+		// player->plane.x = 0.66;
+		// player->plane.y = 0;
 	}
 	else if (c == 'S')
 	{
 		player->dir.x = 0;
 		player->dir.y = 1;
-		player->plane.x = -0.66;
-		player->plane.y = 0;
+		// player->plane.x = -0.66;
+		// player->plane.y = 0;
 	}
 	else if (c == 'W')
 	{
 		player->dir.x = -1;
 		player->dir.y = 0;
-		player->plane.x = 0;
-		player->plane.y = -0.66;
+		// player->plane.x = 0;
+		// player->plane.y = -0.66;
 	}
 	else if (c == 'E')
 	{
 		player->dir.x = 1;
 		player->dir.y = 0;
-		player->plane.x = 0;
-		player->plane.y = 0.66;
+		// player->plane.x = 0;
+		// player->plane.y = 0.66;
 	}
 }
 
@@ -80,6 +88,7 @@ void	init_map(char **map, t_data *data)
 		i++;
 	}
 	data->h_map = i;
+	reset_ray_face(data->player);
 }
 
 int	create_new_img(t_data *data, t_image *image)
@@ -105,11 +114,11 @@ int	main(int ac, char **av)
 	char	*map[] = {
 		"11111111111111111111111111111111",
 		"10000000000000000000000000000001",
-		"10000000000000000000000000000001",
+		"10000000000000000000010000000001",
 		"10000000010000000000000000000001",
-		"10001000010000000000000000000001",
+		"10001000010000000000010000000001",
 		"10001000000000000000000000000001",
-		"100010000000000000N0000010000001",
+		"100010000000000000N0010010000001",
 		"10000000000000000000000001000001",
 		"11111111111111111111111111111111",
 		NULL
@@ -120,6 +129,8 @@ int	main(int ac, char **av)
 	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
+	data.h_dist = -1;
+	data.v_dist = -1;
 	init_map(map, &data);
 	data.map = malloc(sizeof(char *) * (data.h_map + 1));
 	if (!data.map)

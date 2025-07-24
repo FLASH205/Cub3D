@@ -12,7 +12,8 @@ SRC = \
 	get_next_line.c \
 	get_next_line_utils.c \
 	ft_draw_map.c \
-	move_player.c
+	move_player.c \
+	raycasting_phase.c
 
 OBJ = $(SRC:.c=.o)
 

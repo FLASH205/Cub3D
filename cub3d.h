@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/20 22:27:54 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/24 18:06:38 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ typedef struct s_vector
 
 typedef struct s_player
 {
+	int			rayFaceUp;
+	int			rayFaceDown;
+	int			rayFaceRight;
+	int			rayFaceLeft;
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	plane;
@@ -69,6 +73,8 @@ typedef struct s_data
 	int			h_map;
 	int			add_x;
 	int			add_y;
+	float		h_dist;
+	float		v_dist;
 	t_player	*player;
 	t_image		*image;
 }	t_data;
@@ -82,6 +88,9 @@ char	*ft_strdup(char *str);
 int		ft_strlen(char *str);
 void	ft_clean_all(t_data *data);
 void	ft_draw_map(char **map, t_data *data);
+void	reset_ray_face(t_player *player);
 void	setup_player(t_data *data, t_player *player);
 int		move_player(int key, t_data *data);
+void	raycasting_phase(t_data *data, t_player *player, float angle);
+void	ft_put_pixel(t_image *image, int color, int x, int y);
 #endif
