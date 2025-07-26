@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/24 18:06:38 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/26 16:50:39 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@
 #  define BUFFER_SIZE  1
 # endif
 
+# define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 8	//*	player speed
+# define P_SPEED 16	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 64
 # define UP 13
@@ -35,9 +36,10 @@
 # define LEFT 0
 # define A_LEFT 123
 # define A_RIGHT 124
-# define FOV 60
-# define PI 3.14159265
+# define FOV PI / 3
 # define RAY_STEP 1
+# define WIDTH 1280
+# define HEIGHT 768
 
 typedef struct s_image
 {
@@ -77,6 +79,7 @@ typedef struct s_data
 	float		v_dist;
 	t_player	*player;
 	t_image		*image;
+	float		dist_rays[WIDTH];
 }	t_data;
 
 int		ft_read_file(t_data *data, char *file);
@@ -87,10 +90,11 @@ char	*ft_strjoin(char *line, char *buff);
 char	*ft_strdup(char *str);
 int		ft_strlen(char *str);
 void	ft_clean_all(t_data *data);
-void	ft_draw_map(char **map, t_data *data);
+void	ft_draw_map(t_data *data);
 void	reset_ray_face(t_player *player);
-void	setup_player(t_data *data, t_player *player);
+// void	setup_player(t_data *data, t_player *player);
 int		move_player(int key, t_data *data);
 void	raycasting_phase(t_data *data, t_player *player, float angle);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
+float	normalize_angle(float angle);
 #endif

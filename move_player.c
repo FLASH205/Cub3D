@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/22 15:40:09 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/26 17:09:22 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ void	ft_memset(void *str, int c, int size)
 void	rotate_player(t_player *player, double angle)
 {
 	float	old_dir_x;
-	float	old_plane_x;
 
 	old_dir_x = player->dir.x;
 	player->dir.x = player->dir.x * cosf(angle) - player->dir.y * sinf(angle);
 	player->dir.y = old_dir_x * sinf(angle) + player->dir.y * cosf(angle);
-	old_plane_x = player->plane.x;
-	player->plane.x = player->plane.x * cosf(angle) - player->plane.y * sinf(angle);
-	player->plane.y = old_plane_x * sinf(angle) + player->plane.y * cosf(angle);
 }
 
 
@@ -140,8 +136,8 @@ int	move_player(int key, t_data *data)
 		player->pos.y = new_y;
 
 	// redraw
-	ft_memset(data->image->addr, 0, data->h_map * SIZE * data->w_map * SIZE * data->image->bpp / 8);
-	ft_draw_map(data->map, data);
+	// ft_memset(data->image->addr, 0, HEIGHT * WIDTH * data->image->bpp / 8);
+	ft_draw_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->window, data->image->img, 0, 0);
 	return (1);
 }

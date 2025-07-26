@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/24 10:04:42 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/26 17:09:40 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	create_new_img(t_data *data, t_image *image)
 {
 	int	g;
 
-	image->img =  mlx_new_image(data->mlx_ptr, data->w_map * SIZE, data->h_map * SIZE);
+	image->img =  mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
 	if (!image->img)
 		return (0);
 	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->l_size, &g);
@@ -105,17 +105,11 @@ int	create_new_img(t_data *data, t_image *image)
 int	main(int ac, char **av)
 {
 	t_data	data;
-	//^		 char	*addr;
-	//^		 int	w = 32;
-	//^		 int	x = 2;
-	//^		 int y = 3;
-	//^		 addr + w * y + x + bpp;
-	//^		 *(int *)addr = i;
 	char	*map[] = {
 		"11111111111111111111111111111111",
 		"10000000000000000000000000000001",
-		"10000000000000000000010000000001",
-		"10000000010000000000000000000001",
+		"10100000000000000000010000000001",
+		"11000000010000000000000000000001",
 		"10001000010000000000010000000001",
 		"10001000000000000000000000000001",
 		"100010000000000000N0010010000001",
@@ -140,12 +134,13 @@ int	main(int ac, char **av)
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	data.window = mlx_new_window(data.mlx_ptr, data.w_map * SIZE, data.h_map * SIZE, "Cub3d");
+	// data.window = mlx_new_window(data.mlx_ptr, data.w_map * SIZE, data.h_map * SIZE, "Cub3d");
+	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3d");
 	if (!data.window)
 		return (ft_clean_all(&data), 1);
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
-	ft_draw_map(data.map, &data);
+	ft_draw_map(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_key_hook(data.window, ft_click_keys, &data);
 	mlx_hook(data.window, 2, 1L<<0, move_player, &data);
