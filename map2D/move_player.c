@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/26 17:09:22 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/29 14:46:14 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ int	is_collision(float x, float y, char **map)
 {
 	int mx, my;
 
-	// Check left
+	//^ Check left______________________________
 	mx = (int)((x - PLAYER_RADIUS) / SIZE);
 	my = (int)(y / SIZE);
 	if (map[my][mx] == '1')
 		return (1);
 
-	// Check right
+	//^ Check right______________________________
 	mx = (int)((x + PLAYER_RADIUS) / SIZE);
 	my = (int)(y / SIZE);
 	if (map[my][mx] == '1')
 		return (1);
 
-	// Check up
+	//^ Check up______________________________
 	mx = (int)(x / SIZE);
 	my = (int)((y - PLAYER_RADIUS) / SIZE);
 	if (map[my][mx] == '1')
 		return (1);
 
-	// Check down
+	//^ Check down______________________________
 	mx = (int)(x / SIZE);
 	my = (int)((y + PLAYER_RADIUS) / SIZE);
 	if (map[my][mx] == '1')
@@ -108,7 +108,8 @@ int	move_player(int key, t_data *data)
 	float		new_y;
 
 	player = data->player;
-
+	new_x = player->pos.x;
+	new_y = player->pos.y;
 	if (key == UP)
 	{
 		new_x = player->pos.x + player->dir.x * P_SPEED;
@@ -119,7 +120,7 @@ int	move_player(int key, t_data *data)
 		new_x = player->pos.x - player->dir.x * P_SPEED;
 		new_y = player->pos.y - player->dir.y * P_SPEED;
 	}
-	else
+	else if (key == A_RIGHT || key == A_LEFT)
 	{
 		new_x = player->pos.x;
 		new_y = player->pos.y;
@@ -127,6 +128,19 @@ int	move_player(int key, t_data *data)
 			rotate_player(player, ROT_SPEED);
 		else if (key == LEFT || key == A_LEFT)
 			rotate_player(player, -ROT_SPEED);
+	}
+	else if (key == RIGHT || key == LEFT)
+	{
+		if (key == RIGHT)
+		{
+			new_x = player->pos.x + -player->dir.y * 6;
+			new_y = player->pos.y + player->dir.x * 6;
+		}
+		if (key == LEFT)
+		{
+			new_x = player->pos.x + player->dir.y * 6;
+			new_y = player->pos.y + -player->dir.x * 6;
+		}
 	}
 
 	// check collision before moving
@@ -136,7 +150,7 @@ int	move_player(int key, t_data *data)
 		player->pos.y = new_y;
 
 	// redraw
-	// ft_memset(data->image->addr, 0, HEIGHT * WIDTH * data->image->bpp / 8);
+	ft_memset(data->image->addr, 0, data->h_map * SIZE * data->w_map * SIZE * data->image->bpp / 8);
 	ft_draw_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->window, data->image->img, 0, 0);
 	return (1);

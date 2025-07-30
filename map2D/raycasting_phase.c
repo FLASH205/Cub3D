@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:18:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/26 18:27:31 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/30 14:16:41 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	raycasting_phase(t_data *data, t_player *player, float angle)
 	while (i < WIDTH)
 	{
 		ray_angle = normalize_angle(angle + i * FOV / WIDTH);
+		// printf("\033[1;35mray_angle (radian) = %f\n", ray_angle);
+		// printf("\033[1;33mray_angle (degree) = %f\n", (ray_angle * 180) / M_PI);
 		reset_ray_face(player);
 		player->rayFaceDown = (ray_angle >= 0 && ray_angle < M_PI);
 		player->rayFaceUp = !player->rayFaceDown;
@@ -116,23 +118,33 @@ void	raycasting_phase(t_data *data, t_player *player, float angle)
 		player->rayFaceRight = !player->rayFaceLeft;
 		get_horizontal(data, ray_angle, player);
 		get_vertical(data, ray_angle, player);
-		// printf("horizontal_dis : %f\n", data->h_dist);
-		// printf("vertical_dis : %f\n", data->v_dist);
 		if (data->h_dist < data->v_dist)
+		{
+			if (player->rayFaceUp)
+				data->color[i] = 0x6E6E6E;
+			else
+				data->color[i] = 0x9E0E0E;
 			data->dist_rays[i] = data->h_dist;
+		}
 		else
+		{
+			if (player->rayFaceLeft)
+				data->color[i] = 0xE3E50B;
+			else
+				data->color[i] = 0x6C00C2;
 			data->dist_rays[i] = data->v_dist;
+		}
 		//*	draw rays -----------------------------------
-		// int j = 0;
-		// if (i == WIDTH/2)
-		// {
+		int j = 0;
+		if (i == WIDTH/2)
+		{
 		// 	printf("angle = %f\n", ray_angle);
-		// 	while (j < data->dist_rays[i])
-		// 	{
-		// 		ft_put_pixel(data->image, 0xff0000, data->player->pos.x + cosf(ray_angle) * j, data->player->pos.y + sinf(ray_angle) * j);
-		// 		j++;
-		// 	}
-		// }
+			while (j < data->dist_rays[i])
+			{
+				ft_put_pixel(data->image, 0xff0000, data->player->pos.x + cosf(ray_angle) * j, data->player->pos.y + sinf(ray_angle) * j);
+				j++;
+			}
+		}
 		//*	______________________________________________
 		i++;
 	}

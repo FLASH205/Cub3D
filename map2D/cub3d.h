@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/26 16:50:39 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/30 15:04:22 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PLAYER_RADIUS 6
 # define ESC 53
 # define P_SPEED 16	//*	player speed
-# define ROT_SPEED 0.05	//*	rotate speed
+# define ROT_SPEED 0.1	//*	rotate speed
 # define SIZE 64
 # define UP 13
 # define DOWN 1
@@ -80,6 +80,7 @@ typedef struct s_data
 	t_player	*player;
 	t_image		*image;
 	float		dist_rays[WIDTH];
+	int			color[WIDTH];
 }	t_data;
 
 int		ft_read_file(t_data *data, char *file);
