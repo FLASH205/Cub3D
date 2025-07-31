@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/07/31 12:03:31 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/31 14:42:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int count_width_height(t_data *data)
 			|| md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W')))
 		{
 			counter++;
-			len_line = ft_strlen(line);
+			len_line = ft_strlen(md_strtrim(line, "\n"));
 			if (len_line >= max_width)
 				max_width = len_line;
 		}
@@ -73,6 +73,7 @@ int count_width_height(t_data *data)
 int	load_file(t_data *data, int fd)
 {
 	char *line;
+	int	order;
 	int i;
 
 	if (count_width_height(data) == 1)
@@ -80,7 +81,9 @@ int	load_file(t_data *data, int fd)
 	data->map = malloc((data->h_map + 1) * sizeof(char *));
 	if (!data->map)
 		return(perror("Error\n"), 1);
+	data->map[0] = NULL;
 	i = 0;
+	order = 1;
 	while (1)
 	{
         line = get_next_line(fd);
@@ -100,12 +103,17 @@ int	load_file(t_data *data, int fd)
 			data->c_color = line;
 		else if (md_strchr(line, '1') || md_strchr(line, '0') || md_strchr(line, 'N') || md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W'))
 		{
+			if (order != 7)
+				return (write(2, "Error\nOrder Problem !\n", 22), 1);
 			data->map[i] = malloc(ft_strlen(line));
-			data->map[i] = line;
+			data->map[i] = md_strtrim(line, "\n");
 			i++;
 		}
+		if (line[0] != '\n' && (!data->map[0]))
+			order++;
+		// free(line);
 	}
-	data->map[i] = NULL; 
+	data->map[i] = NULL;
 	if (!data->no_map || !data->so_map || !data->we_map || !data->ea_map || !data->f_color || !data->c_color || !data->map[0])
 		return (free_str(data->map), write(2, "Error\nNeed more categories\n", 27), 1);
     return (0);
