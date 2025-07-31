@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/31 11:17:17 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:01:39 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 16	//*	player speed
+# define P_SPEED 36	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 64
 # define UP 13

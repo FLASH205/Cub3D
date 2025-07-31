@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/07/31 11:23:13 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/07/31 12:03:31 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ int	load_file(t_data *data, int fd)
 			i++;
 		}
 	}
-	if (!data->no_map || !data->so_map || !data->we_map || !data->ea_map || !data->f_color || !data->c_color)
+	data->map[i] = NULL; 
+	if (!data->no_map || !data->so_map || !data->we_map || !data->ea_map || !data->f_color || !data->c_color || !data->map[0])
 		return (free_str(data->map), write(2, "Error\nNeed more categories\n", 27), 1);
     return (0);
 }
