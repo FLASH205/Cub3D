@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   free_resourses.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: rd_md_haker <rd_md_haker@student.42.fr>    #+#  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/18 09:54:38 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/18 09:58:24 by ybahmaz          ###   ########.fr       */
+/*   Created: 2025-07-31 09:34:11 by rd_md_haker       #+#    #+#             */
+/*   Updated: 2025-07-31 09:34:11 by rd_md_haker      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*ft_strndup(char *str, int size)
+void    free_str(char **str)
 {
-	int		i;
-	char	*new;
+	int	i;
 
-	if (!str)
-		return (NULL);
-	new = malloc(size + 1);
 	i = 0;
-	while (i < size)
-	{
-		new[i] = str[i];
-		i++;
-	}
-	return (new[i] = '\0', new);
+	while (str[i])
+		free(str[i++]);
+	free(str);
 }

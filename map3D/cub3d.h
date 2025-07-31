@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/31 12:01:39 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/07/31 14:23:40 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,6 @@ typedef struct s_data
 	int			color[WIDTH];
 }	t_data;
 
-int		ft_read_file(t_data *data, char *file);
-char	*ft_strndup(char *str, int size);
 char	*get_next_line(int fd);
 char	*ft_strchr(char *str);
 char	*ft_strjoin(char *line, char *buff);
