@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/31 14:33:43 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/01 06:48:36 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@
 typedef struct s_image
 {
 	void	*img;
+	
 	char	*addr;
+	char	*value;
 	int		bpp;	//*	bit_per_pixel
 	int		l_size;
 }	t_image;
@@ -72,12 +74,12 @@ typedef struct s_data
 	char		**map;
 	int			w_map;
 	int			h_map;
-	char		*no_map;
-	char		*so_map;
-	char		*we_map;
-	char		*ea_map;
-	char		*f_color;
-	char		*c_color;
+	t_image		no_map;
+	t_image		so_map;
+	t_image		we_map;
+	t_image		ea_map;
+	int			*f_color;
+	int			*c_color;
 	int			add_x;
 	int			add_y;
 	float		h_dist;

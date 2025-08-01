@@ -1,6 +1,6 @@
 NAME = cub3D
 
-FLAG = -Wextra -Werror -Wall# -fsanitize=address -g
+FLAG = -Wextra -Werror -Wall #-fsanitize=address -g
 
 MLX = -lmlx -framework OpenGL -framework AppKit
 
@@ -16,6 +16,7 @@ SRC = \
 	parsing_map.c \
 	free_resourses.c \
 	utils_func.c \
+	utils_splite.c \
 
 OBJ = $(SRC:.c=.o)
 

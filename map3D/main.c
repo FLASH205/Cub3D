@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/31 12:06:01 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/01 10:18:11 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,22 @@ int	main(int ac, char **av)
 	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
+	data.no_map.value = NULL;
+	data.so_map.value = NULL;
+	data.ea_map.value = NULL;
+	data.we_map.value = NULL;
 	data.h_dist = -1;
 	data.v_dist = -1;
 	
 	if (parsing_file(&data, av[1]) == 1)
 		return (1);
+	printf("%s", data.no_map.value);
+	printf("%s", data.so_map.value);
+	printf("%s", data.ea_map.value);
+	printf("%s", data.we_map.value);
+	for(int i=0;i<data.h_map;i++){
+		printf("%s", data.map[i]);
+	}
 	init_map(&data);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
