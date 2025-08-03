@@ -2,7 +2,7 @@ NAME = cub3D
 
 FLAG = -Wextra -Werror -Wall #-fsanitize=address -g
 
-MLX = -lmlx -framework OpenGL -framework AppKit
+MLX = -L /home/rd_md_haker/Documents/mlx -lmlx_Linux -lXext -lX11 -lm
 
 SRC = \
 	main.c \

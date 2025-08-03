@@ -95,6 +95,7 @@ int	convert_to_hex(char *str)
 	int	r_color;
 	int	g_color;
 	int	b_color;
+	int	hex_num;
 	char **rgb;
 
 	rgb = md_split(str, ',');
@@ -102,9 +103,9 @@ int	convert_to_hex(char *str)
 	g_color = md_atoi(rgb[1]);
 	b_color = md_atoi(rgb[2]);
 	if (r_color > 255 || g_color > 255 || b_color > 255)
-		return (write(2, "The number must be between 0-255\n", 33), 0);
-	//continue work about converting from rgb to hexadecimal
-	return (0);
+		return (write(2, "Error\nThe number must be between 0-255\n", 39), 1);
+	hex_num = (r_color << 16) | (g_color << 8) | b_color;
+	return (hex_num);
 }
 
 int	parse_rgb(char *line)
@@ -112,6 +113,7 @@ int	parse_rgb(char *line)
 	int comma;
 	char	*str;
 	int len_color;
+	int	hex;
 	int i;
 
 	comma = 0;
@@ -144,7 +146,10 @@ int	parse_rgb(char *line)
 		if (comma != 2)
 			return (free(str), write(2, "Error\nSyntax error of rgb(0,0,0)\n", 33), 0);
 	}
-	return (convert_to_hex(str));
+	hex = convert_to_hex(str);
+	if (hex == 1)
+		return(0);
+	return (hex);
 }
 
 
@@ -176,9 +181,9 @@ int	load_file(t_data *data, int fd)
 		else if (md_strncmp(line, "EA", 2) == 0)
 			data->ea_map.value = parse_direction(line);
 		else if (md_strncmp(line, "F", 1) == 0)
-			data->f_color = 8;
+			data->f_color = parse_rgb(line);
 		else if (md_strncmp(line, "C", 1) == 0)
-			data->c_color = 6;
+			data->c_color = parse_rgb(line);
 		else if (md_strchr(line, '1') || md_strchr(line, '0') || md_strchr(line, 'N') || md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W'))
 		{
 			if (order != 7)
@@ -197,6 +202,64 @@ int	load_file(t_data *data, int fd)
     return (0);
 }
 
+int	check_deff_co(t_data *data)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] != '1' && data->map[i][j] != '0'
+				&& data->map[i][j] != 'N' && data->map[i][j] != 'E'
+				&& data->map[i][j] != 'S' && data->map[i][j] != 'W'
+				&& data->map[i][j] != ' ')
+				return (0);
+			j++;	
+		}
+		i++;
+	}
+	return (1);
+}
+
+int	check_component(t_data *data)
+{
+	int i;
+	int is_wall;
+	int is_player;
+	int is_free_space;
+
+	i = 0;
+	is_player = 0;
+	is_wall = 0;
+	is_free_space = 0;
+	while (data->map[i])
+	{
+		if (md_strchr(data->map[i], '1'))
+			is_wall = 1;
+		if (md_strchr(data->map[i], '0') == 1)
+			is_free_space = 1;
+		if (md_strchr(data->map[i], 'S') || md_strchr(data->map[i], 'E') || md_strchr(data->map[i], 'W') || md_strchr(data->map[i], 'N'))
+			is_player = 1;
+		i++;
+	}
+	if (!is_player || !is_free_space || !is_wall || !check_deff_co(data))
+		return (write(2, "Error\nYou Must set all components require\n", 42), 1);
+	return (0);
+}
+
+int	pasre_map(t_data *data)
+{
+	if (check_component(data) == 1)
+		return (1);
+	// if (check_if_closed(data) == 1)
+	// 	return (1);
+	return (0);
+}
+
 int	parsing_file(t_data *data, char *file_name)
 {
 	int	fd;
@@ -207,6 +270,8 @@ int	parsing_file(t_data *data, char *file_name)
 	if (fd == -1)
 		return (perror("Error\n"), 1);
 	if (load_file(data, fd))
+		return (1);
+	if (pasre_map(data) == 1)
 		return (1);
 	return (0);
 }

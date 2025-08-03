@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include <unistd.h>
-# include "mlx.h"
+# include "/home/rd_md_haker/Documents/mlx/mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>

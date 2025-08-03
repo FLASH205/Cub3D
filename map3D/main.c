@@ -122,6 +122,8 @@ int	main(int ac, char **av)
 	printf("%s", data.so_map.value);
 	printf("%s", data.ea_map.value);
 	printf("%s", data.we_map.value);
+	printf("%X\n", data.f_color);
+	printf("%X\n", data.c_color);
 	for(int i=0;i<data.h_map;i++){
 		printf("%s", data.map[i]);
 	}
