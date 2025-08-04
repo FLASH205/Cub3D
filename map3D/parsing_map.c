@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/01 10:18:28 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:47:19 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,19 @@ int count_width_height(t_data *data)
 
 char	*parse_direction(char *line)
 {
-	int i;
-	char *result;
-	
+	int		i;
+	char	*trimmed;
+	char	*result;
+
 	i = 2;
-	if (!md_strncmp(line, "NO", 2) || !md_strncmp(line, "SO", 2)
-		|| !md_strncmp(line, "WE", 2) || !md_strncmp(line, "EA", 2))
-	{
-		while (line[i])
-		{
-			if (md_isdigit(line[i]) || md_isalpha(line[i]))
-				break ;
-			i++;
-		}
-	}
-	result = ft_strdup(line + i);
+
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	trimmed = md_strtrim(line + i, " \t\n");
+	if (!trimmed)
+		return (NULL);
+	result = ft_strdup(trimmed);
+	free(trimmed);
 	return (result);
 }
 
@@ -136,7 +134,7 @@ int	parse_rgb(char *line)
 		}
 		while (line[i])
 		{
-			if ((line[i] == ',' && md_isdigit(line[i - 1]) && md_isdigit(line[i + 1])) || (line[i] == ',' && line[i + 1] == '\0'))
+			if ((line[i] == ',' && md_isdigit(line[i - 1]) && md_isdigit(line[i + 1])) || (line[i] == ',' && line[i + 1] == '\n'))
 				comma++;
 			if (comma > 2)
 				return (free(str), write(2, "Error\nSyntax error of rgb(0,0,0)\n", 33), 0);
@@ -251,12 +249,111 @@ int	check_component(t_data *data)
 	return (0);
 }
 
+int	check_one_last(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->map[0][i])
+	{
+		if (data->map[0][i] != '1' && data->map[0][i] != ' ')
+			return (write(2, "Error\nMap must be closed\n", 25), 1);
+		i++;
+	}
+	i = 0;
+	while (data->map[data->h_map - 1][i])
+	{
+		if (data->map[data->h_map - 1][i] != '1'
+			&& data->map[data->h_map - 1][i] != ' ')
+			return (write(2, "Error\nMap must be closed\n", 25), 1);
+		i++;
+	}
+	return (0);
+}
+
+int	check_space_close(t_data *data)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			while (data->map[i][j] && data->map[i][j] == ' ')
+				j++;
+			while (data->map[i][j] && data->map[i][j] != ' ')
+				j++;
+			if (data->map[i][j] && data->map[i][j] == ' ')
+			{
+				if ((data->map[i][j + 1] && data->map[i][j + 1] != '1')
+					|| (data->map[i][j - 1] && data->map[i][j - 1] != '1')
+					|| (data->map[i + 1][j] && data->map[i + 1][j] != '1')
+					|| (data->map[i - 1][j] && data->map[i - 1][j] != '1'))
+					return (write(2, "Error\nMap must be closed\n", 25), 1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_zero_null(t_data *data)
+{
+	int i;
+	int	j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if ((data->map[i][j] == '0') && 
+				((ft_strlen(data->map[i - 1]) < ft_strlen(data->map[i]) && data->map[i - 1][j] == '\0') ||
+				(ft_strlen(data->map[i + 1]) < ft_strlen(data->map[i]) && data->map[i + 1][j] == '\0')))
+				return (write(2, "Error\nMap must be closed\n", 25), 1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	check_if_closed(t_data *data)
+{
+	int	i;
+	int	len_rows;
+
+	i = 0;
+	if (check_one_last(data) == 1)
+		return (1);
+	while (data->map[i])
+	{
+		len_rows = ft_strlen(data->map[i]);
+		if (data->map[i][0] != '1' && data->map[i][0] != ' ')
+			return (write(2, "Error\nMap must be closed\n", 25), 1);
+		if (data->map[i][len_rows - 1] != '1')
+			return (write(2, "Error\nMap must be closed\n", 25), 1);
+		i++;
+	}
+	if (check_space_close(data) == 1)
+		return (1);
+	if (check_zero_null(data) == 1)
+		return (1);
+	return (0);
+}
+
+
 int	pasre_map(t_data *data)
 {
 	if (check_component(data) == 1)
 		return (1);
-	// if (check_if_closed(data) == 1)
-	// 	return (1);
+	if (check_if_closed(data) == 1)
+		return (1);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:42:29 by mradouan          #+#    #+#             */
-/*   Updated: 2025/07/30 21:28:34 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:00:23 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,9 @@ unsigned int rgb_to_hex_int(int r, int g, int b) {
 // 	load_file(data);
 // }
 int main() {
-	int r =  0x0069, g = 99, b = 71;
-	unsigned int hex = rgb_to_hex_int(r, g, b);
-
-	printf("Hex value: %x\n", hex); // Output: 0xFF6347
+	char *input = "     ./path_to_the_north_texture      ";
+    char *out = md_strtrim(input, " \t");
+    printf("'%s'\n", out);
 
 	return 0;
 }

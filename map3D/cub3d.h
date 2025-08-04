@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/01 10:05:17 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 07:40:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define CUB3D_H
 
 # include <unistd.h>
-# include "/home/rd_md_haker/Documents/mlx/mlx.h"
+//# include "/home/rd_md_haker/Documents/mlx/mlx.h"
+# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>

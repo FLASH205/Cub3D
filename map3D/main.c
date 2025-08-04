@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/01 10:18:11 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 11:05:55 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,10 +118,10 @@ int	main(int ac, char **av)
 	
 	if (parsing_file(&data, av[1]) == 1)
 		return (1);
-	printf("%s", data.no_map.value);
-	printf("%s", data.so_map.value);
-	printf("%s", data.ea_map.value);
-	printf("%s", data.we_map.value);
+	printf("%s\n", data.no_map.value);
+	printf("%s\n", data.so_map.value);
+	printf("%s\n", data.ea_map.value);
+	printf("%s\n", data.we_map.value);
 	printf("%X\n", data.f_color);
 	printf("%X\n", data.c_color);
 	for(int i=0;i<data.h_map;i++){
