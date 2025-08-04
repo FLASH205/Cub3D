@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/30 14:14:27 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/04 13:12:19 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ void	ft_put_pixel(t_image *image, int color, int x, int y)
 
 float	normalize_angle(float angle)
 {
-	while (angle > M_PI * 2)
-		angle -= 2 * M_PI;
+	while (angle >= PI * 2)
+		angle -= 2 * PI;
 	while (angle < 0)
-		angle += M_PI * 2;
+		angle += PI * 2;
 	return (angle);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:02:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/31 13:12:08 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/04 13:11:47 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,9 @@ void	v2_raycast(t_data *data, t_player *player, float angle)
 	{
 		ray_angle = normalize_angle(angle + i * FOV / WIDTH);
 		reset_ray_face(player);
-		player->rayFaceDown = (ray_angle >= 0 && ray_angle < M_PI);
+		player->rayFaceDown = (ray_angle > 0 && ray_angle < PI);
 		player->rayFaceUp = !player->rayFaceDown;
-		player->rayFaceLeft = (ray_angle >= M_PI / 2 && ray_angle <= 3 * M_PI / 2);
+		player->rayFaceLeft = (ray_angle >= PI / 2 && ray_angle <= 3 * PI / 2);
 		player->rayFaceRight = !player->rayFaceLeft;
 		get_horizontal_dist(data, ray_angle, player);
 		get_vertical_dist(data, ray_angle, player);

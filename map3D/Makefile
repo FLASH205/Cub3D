@@ -17,6 +17,7 @@ SRC = \
 	free_resourses.c \
 	utils_func.c \
 	utils_splite.c \
+	upload_imgs.c 
 
 OBJ = $(SRC:.c=.o)
 

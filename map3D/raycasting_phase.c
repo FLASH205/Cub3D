@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 14:18:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/07/30 13:31:00 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/04 13:02:16 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ void	raycasting_phase(t_data *data, t_player *player, float angle)
 	{
 		ray_angle = normalize_angle(angle + i * FOV / WIDTH);
 		// printf("\033[1;34mray_angle (radian) = %f\n", ray_angle);
-		// printf("\033[1;31mray_angle (degree) = %f\n", (ray_angle * 180) / M_PI);
+		// printf("\033[1;31mray_angle (degree) = %f\n", (ray_angle * 180) / PI);
 		// printf("p_x = %f\tp_y = %f\n}\n", player->pos.x, player->pos.y);	
 		reset_ray_face(player);
-		player->rayFaceDown = (ray_angle >= 0 && ray_angle < M_PI);
+		player->rayFaceDown = (ray_angle >= 0 && ray_angle < PI);
 		player->rayFaceUp = !player->rayFaceDown;
-		player->rayFaceLeft = (ray_angle >= M_PI / 2 && ray_angle <= 3 * M_PI / 2);
+		player->rayFaceLeft = (ray_angle >= PI / 2 && ray_angle <= 3 * PI / 2);
 		player->rayFaceRight = !player->rayFaceLeft;
 		get_horizontal(data, ray_angle, player);
 		get_vertical(data, ray_angle, player);

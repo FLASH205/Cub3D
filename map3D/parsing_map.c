@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/04 12:55:11 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:04:14 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,23 +228,19 @@ int	check_component(t_data *data)
 	int i;
 	int is_wall;
 	int is_player;
-	int is_free_space;
 
 	i = 0;
 	is_player = 0;
 	is_wall = 0;
-	is_free_space = 0;
 	while (data->map[i])
 	{
 		if (md_strchr(data->map[i], '1'))
 			is_wall = 1;
-		if (md_strchr(data->map[i], '0') == 1)
-			is_free_space = 1;
 		if (md_strchr(data->map[i], 'S') || md_strchr(data->map[i], 'E') || md_strchr(data->map[i], 'W') || md_strchr(data->map[i], 'N'))
 			is_player = 1;
 		i++;
 	}
-	if (!is_player || !is_free_space || !is_wall || !check_deff_co(data))
+	if (!is_player || !is_wall || !check_deff_co(data))
 		return (write(2, "Error\nYou Must set all components require\n", 42), 1);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 07:40:44 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:24:49 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 36	//*	player speed
+# define P_SPEED 20	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
-# define SIZE 64
+# define SIZE 32
 # define UP 13
 # define DOWN 1
 # define RIGHT 2
@@ -110,6 +110,7 @@ float	normalize_angle(float angle);
 int		parsing_file(t_data *data, char *file_name);
 char	*parse_direction(char *line);
 int		parse_rgb(char *line);
+int		set_imgs(t_data *data);
 char	**md_split(char const *s, char c);
 int		md_strncmp(const char *s1, const char *s2, size_t n);
 size_t	md_strlcpy(char *dst, const char *src, size_t dstsize);
