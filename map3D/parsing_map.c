@@ -186,7 +186,7 @@ int	load_file(t_data *data, int fd)
 		{
 			if (order != 7)
 				return (free(line), write(2, "Error\nOrder Problem !\n", 22), 1);
-			data->map[i] = malloc(ft_strlen(line));
+			// data->map[i] = malloc(ft_strlen(line));
 			data->map[i] = md_strtrim(line, "\n");
 			i++;
 		}
@@ -270,7 +270,7 @@ int	check_one_last(t_data *data)
 int	check_space_close(t_data *data)
 {
 	int i;
-	int	j;
+	int j;
 
 	i = 0;
 	while (data->map[i])
@@ -282,15 +282,10 @@ int	check_space_close(t_data *data)
 				j++;
 			while (data->map[i][j] && data->map[i][j] != ' ')
 				j++;
-			if (data->map[i][j] && data->map[i][j] == ' ')
-			{
-				if ((data->map[i][j + 1] && data->map[i][j + 1] != '1')
-					|| (data->map[i][j - 1] && data->map[i][j - 1] != '1')
-					|| (data->map[i + 1][j] && data->map[i + 1][j] != '1')
-					|| (data->map[i - 1][j] && data->map[i - 1][j] != '1'))
-					return (write(2, "Error\nMap must be closed\n", 25), 1);
-			}
-			j++;
+			if (data->map[i][j] == ' ' && is_safe_space(data, i, j))
+				return (write(2, "Error\nMap must be closed\n", 25), 1);
+			if (data->map[i][j])
+				j++;
 		}
 		i++;
 	}

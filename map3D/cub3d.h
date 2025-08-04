@@ -14,7 +14,7 @@
 # define CUB3D_H
 
 # include <unistd.h>
-//# include "/home/rd_md_haker/Documents/mlx/mlx.h"
+// # include "/home/rd_md_haker/Documents/mlx/mlx.h"
 # include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
@@ -109,6 +109,7 @@ float	normalize_angle(float angle);
 
 int		parsing_file(t_data *data, char *file_name);
 char	*parse_direction(char *line);
+int		is_safe_space(t_data *data, int i, int j);
 int		parse_rgb(char *line);
 int		set_imgs(t_data *data);
 char	**md_split(char const *s, char c);

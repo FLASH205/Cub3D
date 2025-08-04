@@ -12,6 +12,20 @@
 
 #include "cub3d.h"
 
+
+int	is_safe_space(t_data *data, int i, int j)
+{
+	if (data->map[i][j + 1] && data->map[i][j + 1] != '1')
+		return (1);
+	if (j > 0 && data->map[i][j - 1] && data->map[i][j - 1] != '1')
+		return (1);
+	if (data->map[i + 1] && data->map[i + 1][j] && data->map[i + 1][j] != '1')
+		return (1);
+	if (i > 0 && data->map[i - 1] && data->map[i - 1][j] && data->map[i - 1][j] != '1')
+		return (1);
+	return (0);
+}
+
 int	md_isalpha(int c)
 {
 	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
