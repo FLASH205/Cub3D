@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/04 11:47:19 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/04 12:55:11 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -315,6 +315,10 @@ int	check_zero_null(t_data *data)
 			if ((data->map[i][j] == '0') && 
 				((ft_strlen(data->map[i - 1]) < ft_strlen(data->map[i]) && data->map[i - 1][j] == '\0') ||
 				(ft_strlen(data->map[i + 1]) < ft_strlen(data->map[i]) && data->map[i + 1][j] == '\0')))
+				return (write(2, "Error\nMap must be closed\n", 25), 1);
+			if ((data->map[i][j] == '0') &&
+				((data->map[i + 1] && data->map[i + 1][j] == ' ') ||
+				(data->map[i - 1] && data->map[i - 1][j] == ' ')))
 				return (write(2, "Error\nMap must be closed\n", 25), 1);
 			j++;
 		}
