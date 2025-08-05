@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 13:12:19 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/04 16:32:42 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-void	draw_strip(float wall_strip, t_image *image, int x, int color)
+void	draw_strip(float wall_strip, t_data *data, int x, int color)
 {
 	int		i;
 	float	center;
@@ -85,11 +85,11 @@ void	draw_strip(float wall_strip, t_image *image, int x, int color)
 	while (i < HEIGHT)
 	{
 		if (i <= HEIGHT / 2 - center)	//?	Ceiling Color
-			ft_put_pixel(image, 0x0069DE, x, i);
+			ft_put_pixel(data->image, data->c_color, x, i);
 		else if (i >= HEIGHT / 2 + center)	//*	Floor Color
-			ft_put_pixel(image, 0x129100, x, i);
+			ft_put_pixel(data->image, data->f_color, x, i);
 		else	//@	Wall Color
-			ft_put_pixel(image, color, x, i);
+			ft_put_pixel(data->image, color, x, i);
 		i++;
 	}
 	
@@ -129,7 +129,7 @@ void	ft_draw_map(t_data *data)
 	{
 		dist_for_projection_plane = (WIDTH / 2) / tanf(FOV / 2);
 		wall_strip = (SIZE / data->dist_rays[i]) * dist_for_projection_plane;
-		draw_strip(wall_strip, data->image, i, data->color[i]);
+		draw_strip(wall_strip, data, i, data->color[i]);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/04 13:04:14 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/05 15:16:25 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,12 @@ int	load_file(t_data *data, int fd)
 				return (free(line), write(2, "Error\nOrder Problem !\n", 22), 1);
 			// data->map[i] = malloc(ft_strlen(line));
 			data->map[i] = md_strtrim(line, "\n");
+			if (!data->map[i])
+			{
+				while (--i >= 0)
+					free(data->map[i]);
+				return (free(data->map) ,1);
+			}
 			i++;
 		}
 		if (line[0] != '\n' && (!data->map[0]))

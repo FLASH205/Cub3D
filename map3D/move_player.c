@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 13:02:55 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/05 11:44:58 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,21 +115,21 @@ int	move_player(int key, t_data *data)
 		new_x = player->pos.x + player->dir.x * P_SPEED;
 		new_y = player->pos.y + player->dir.y * P_SPEED;
 	}
-	else if (key == DOWN)
+	if (key == DOWN)
 	{
 		new_x = player->pos.x - player->dir.x * P_SPEED;
 		new_y = player->pos.y - player->dir.y * P_SPEED;
 	}
-	else if (key == A_RIGHT)
+	if (key == A_RIGHT)
 		rotate_player(player, ROT_SPEED);
-	else if (key == A_LEFT)
+	if (key == A_LEFT)
 		rotate_player(player, -ROT_SPEED);
-	else if (key == RIGHT)
+	if (key == RIGHT)
 	{
 		new_x = player->pos.x + -player->dir.y * P_SPEED;
 		new_y = player->pos.y + player->dir.x * P_SPEED;
 	}
-	else if (key == LEFT)
+	if (key == LEFT)
 	{
 		new_x = player->pos.x + player->dir.y * P_SPEED;
 		new_y = player->pos.y + -player->dir.x * P_SPEED;

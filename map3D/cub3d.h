@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 13:24:49 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/05 15:12:26 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 20	//*	player speed
+# define P_SPEED 36	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 32
 # define UP 13
@@ -49,6 +49,8 @@ typedef struct s_image
 	char	*value;
 	int		bpp;	//*	bit_per_pixel
 	int		l_size;
+	int		width;
+	int		height;
 }	t_image;
 
 typedef struct s_vector
@@ -74,6 +76,7 @@ typedef struct s_data
 	char		**map;
 	int			w_map;
 	int			h_map;
+	int			**arr_width;
 	t_image		no_map;
 	t_image		so_map;
 	t_image		we_map;

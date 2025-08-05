@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 13:24:38 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/05 11:30:40 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,8 +118,6 @@ int	main(int ac, char **av)
 	
 	if (parsing_file(&data, av[1]) == 1)
 		return (1);
-	if (set_imgs(&data))
-		return (1);
 	init_map(&data);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
@@ -130,6 +128,8 @@ int	main(int ac, char **av)
 		return (ft_clean_all(&data), 1);
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
+	// if (set_imgs(&data))
+	// 	return (1);
 	ft_draw_map(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_key_hook(data.window, ft_click_keys, &data);
