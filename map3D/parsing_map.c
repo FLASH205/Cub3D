@@ -358,6 +358,23 @@ int	pasre_map(t_data *data)
 	return (0);
 }
 
+int	claim_wd_line(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->arr_width = malloc((data->h_map + 1) * (sizeof(int)));
+	if (!data->arr_width)
+		return (1);
+	while (i < data->h_map)
+	{
+		data->arr_width[i] = ft_strlen(data->map[i]);
+		i++;
+	}
+	return (0);
+}
+
+
 int	parsing_file(t_data *data, char *file_name)
 {
 	int	fd;
@@ -370,6 +387,8 @@ int	parsing_file(t_data *data, char *file_name)
 	if (load_file(data, fd))
 		return (1);
 	if (pasre_map(data) == 1)
+		return (1);
+	if(claim_wd_line(data))
 		return (1);
 	return (0);
 }

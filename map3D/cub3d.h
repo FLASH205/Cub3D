@@ -76,7 +76,7 @@ typedef struct s_data
 	char		**map;
 	int			w_map;
 	int			h_map;
-	int			**arr_width;
+	int			*arr_width;
 	t_image		no_map;
 	t_image		so_map;
 	t_image		we_map;
