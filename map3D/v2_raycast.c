@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:02:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/05 15:20:20 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:17:37 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	is_wall(int x, int y, t_data *data)
 	int	x_offset;
 	int	y_offset;
 
-	if (x < 0 || y < 0 || x >= data->w_map * SIZE || y >= data->h_map * SIZE)
+	if (x < 0 || y < 0 || y >= data->h_map * SIZE || x >= data->arr_width[y / SIZE] * SIZE)
 		return (1);
 	x_map = (int)(x / SIZE);
 	y_map = (int)(y / SIZE);
