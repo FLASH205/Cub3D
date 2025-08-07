@@ -10,14 +10,13 @@ SRC = \
 	get_next_line.c \
 	get_next_line_utils.c \
 	ft_draw_map.c \
-	move_player.c \
+	handle_keys.c \
 	v2_raycast.c \
-	raycasting_phase.c \
 	parsing_map.c \
 	free_resourses.c \
 	utils_func.c \
 	utils_splite.c \
-	upload_imgs.c 
+	upload_imgs.c \
 
 OBJ = $(SRC:.c=.o)
 

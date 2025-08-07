@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/05 17:07:45 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:55:37 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ int	click_cross(t_data *data)
 	exit(0);
 }
 
-int	ft_click_keys(int key, t_data *data)
-{
-	if (key == ESC)
-		(ft_clean_all(data), exit(0));
-	return (1);
-}
-
 void	get_positions(t_player *player, char c, int i, int j)
 {
 	player->pos.x = j * SIZE + SIZE / 2;
@@ -41,29 +34,21 @@ void	get_positions(t_player *player, char c, int i, int j)
 	{
 		player->dir.x = 0;
 		player->dir.y = -1;
-		// player->plane.x = 0.66;
-		// player->plane.y = 0;
 	}
 	else if (c == 'S')
 	{
 		player->dir.x = 0;
 		player->dir.y = 1;
-		// player->plane.x = -0.66;
-		// player->plane.y = 0;
 	}
 	else if (c == 'W')
 	{
 		player->dir.x = -1;
 		player->dir.y = 0;
-		// player->plane.x = 0;
-		// player->plane.y = -0.66;
 	}
 	else if (c == 'E')
 	{
 		player->dir.x = 1;
 		player->dir.y = 0;
-		// player->plane.x = 0;
-		// player->plane.y = 0.66;
 	}
 }
 
@@ -80,7 +65,8 @@ void	init_map(t_data *data)
 		j = 0;
 		while (data->map[i][j] && !n)
 		{
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'S' || data->map[i][j] == 'W' || data->map[i][j] == 'E')
+			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
+				|| data->map[i][j] == 'W' || data->map[i][j] == 'E')
 				(get_positions(data->player, data->map[i][j], i, j), n = 1);
 			j++;
 		}
@@ -115,14 +101,12 @@ int	main(int ac, char **av)
 	data.we_map.value = NULL;
 	data.h_dist = -1;
 	data.v_dist = -1;
-	
 	if (parsing_file(&data, av[1]) == 1)
 		return (1);
 	init_map(&data);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	// data.window = mlx_new_window(data.mlx_ptr, data.w_map * SIZE, data.h_map * SIZE, "Cub3d");
 	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3d");
 	if (!data.window) 
 		return (ft_clean_all(&data), 1);
@@ -132,8 +116,7 @@ int	main(int ac, char **av)
 		return (1);
 	ft_draw_map(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
-	mlx_key_hook(data.window, ft_click_keys, &data);
-	mlx_hook(data.window, 2, 1L<<0, move_player, &data);
+	mlx_hook(data.window, 2, 1L<<0, handle_keys, &data);
 	mlx_hook(data.window, 17, 0, click_cross, &data);
 	return (mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
 }

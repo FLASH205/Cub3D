@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/05 15:12:26 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/07 18:44:15 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 36	//*	player speed
+# define P_SPEED 10	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 32
 # define UP 13
@@ -81,16 +81,21 @@ typedef struct s_data
 	t_image		so_map;
 	t_image		we_map;
 	t_image		ea_map;
+	t_image		*tex[WIDTH];
 	int			f_color;
 	int			c_color;
 	int			add_x;
 	int			add_y;
+	float		hit_x[WIDTH]; // horizontal
+	float		hit_y[WIDTH]; // vertical
 	float		h_dist;
 	float		v_dist;
 	t_player	*player;
 	t_image		*image;
+	// int			is_vertical[WIDTH];
+	int			is_horizontal[WIDTH];
 	float		dist_rays[WIDTH];
-	int			color[WIDTH];
+	// int			color[WIDTH];
 }	t_data;
 
 char	*get_next_line(int fd);
@@ -102,8 +107,7 @@ void	ft_clean_all(t_data *data);
 void	ft_draw_map(t_data *data);
 void	reset_ray_face(t_player *player);
 // void	setup_player(t_data *data, t_player *player);
-int		move_player(int key, t_data *data);
-void	raycasting_phase(t_data *data, t_player *player, float angle);
+int		handle_keys(int key, t_data *data);
 void	v2_raycast(t_data *data, t_player *player, float angle);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
 float	normalize_angle(float angle);

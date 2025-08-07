@@ -1,6 +1,6 @@
 NAME = cub2D
 
-FLAG = -Wextra -Werror -Wall# -fsanitize=address -g
+FLAG = -Wextra -Werror -Wall -fsanitize=address -g
 
 MLX = -lmlx -framework OpenGL -framework AppKit
 

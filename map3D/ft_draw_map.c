@@ -6,57 +6,12 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/04 16:32:42 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:06:37 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-
-
-void	setup_player(t_data *data, t_player *player)
-{
-	int	i;
-	int	j;
-
-	int	r = 10;
-	int	center_x = player->pos.x;
-	int	center_y = player->pos.y;
-
-	i = -r;
-	while (i <= r)
-	{
-		j = -r;
-		while (j <= r)
-		{
-			if (i * i + j * j <= r * r)
-				ft_put_pixel(data->image, 0x00ff33, center_x + j, center_y + i);
-			j++;
-		}
-		i++;
-	}
-}
-
-
-
-void	setup_wall(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < SIZE)
-	{
-		j = 0;
-		while (j < SIZE)
-		{
-			ft_put_pixel(data->image, 0xffea8c, j + data->add_x, i + data->add_y);
-			// mlx_pixel_put(data->mlx_ptr, data->window, j + data->add_x, i + data->add_y, 0xffea8c);
-			j++;
-		}
-		i++;
-	}
-}
 void	ft_put_pixel(t_image *image, int color, int x, int y)
 {
 	char	*addr;
@@ -75,25 +30,43 @@ float	normalize_angle(float angle)
 	return (angle);
 }
 
-void	draw_strip(float wall_strip, t_data *data, int x, int color)
+float	ft_get_start(t_data *data, int i)
 {
-	int		i;
-	float	center;
+	float	offset;
 
-	i = 0;
-	center = wall_strip / 2;
-	while (i < HEIGHT)
-	{
-		if (i <= HEIGHT / 2 - center)	//?	Ceiling Color
-			ft_put_pixel(data->image, data->c_color, x, i);
-		else if (i >= HEIGHT / 2 + center)	//*	Floor Color
-			ft_put_pixel(data->image, data->f_color, x, i);
-		else	//@	Wall Color
-			ft_put_pixel(data->image, color, x, i);
-		i++;
-	}
-	
+	if (data->is_horizontal[i])
+		offset = data->hit_x[i] - (floorf(data->hit_x[i] / SIZE) * SIZE);
+	else 
+		offset = data->hit_y[i] - (floorf(data->hit_y[i] / SIZE) * SIZE);
+	return (offset * data->tex[i]->width / SIZE);
 }
+
+void	draw_strip(float wall_strip, t_data *data, int x, float tex_x)
+{
+	int		y;
+	int		center;
+	int		color;
+	float	tex_y;
+	
+	
+	y = 0;
+	center = wall_strip / 2;
+	while (y < HEIGHT)
+	{
+		if (y <= HEIGHT / 2 - center)	//?	Ceiling Color
+			ft_put_pixel(data->image, data->c_color, x, y);
+		else if (y >= HEIGHT / 2 + center)	//*	Floor Color
+			ft_put_pixel(data->image, data->f_color, x, y);
+		else	//@	Wall Color
+		{
+			tex_y = (y - (HEIGHT / 2 - center)) * data->tex[x]->height / (int)wall_strip;
+			color = *(int *)(data->tex[x]->addr + (int)tex_y * data->tex[x]->l_size + (int)tex_x * data->tex[x]->bpp / 8);
+			ft_put_pixel(data->image, color, x, y);
+		}
+		y++;
+	}
+}
+
 
 void	ft_draw_map(t_data *data)
 {
@@ -101,35 +74,18 @@ void	ft_draw_map(t_data *data)
 	float	dist_for_projection_plane;
 	float	wall_strip;
 	int		i;
-	// int		j;
 	
-	// data->add_y = 0;
-	// i = 0;
-	// while (data->map[i])
-	// {
-	// 	j = 0;
-	// 	data->add_x = 0;
-	// 	while (data->map[i][j])
-	// 	{
-	// 		if (data->map[i][j] == '1')
-	// 			setup_wall(data);
-	// 		j++;
-	// 		data->add_x += SIZE;
-	// 	}
-	// 	i++;
-	// 	data->add_y += SIZE;
-	// }
 	angle = atan2f(data->player->dir.y, data->player->dir.x);
 	angle = normalize_angle(angle - FOV / 2);
-	// raycasting_phase(data, data->player, angle);
+	//*	Ray Casting Phase______________________
 	v2_raycast(data, data->player, angle);
-	// setup_player(data, data->player);
+	//*	Draw Wall______________________________
 	i = 0;
 	while (i < WIDTH)
 	{
 		dist_for_projection_plane = (WIDTH / 2) / tanf(FOV / 2);
 		wall_strip = (SIZE / data->dist_rays[i]) * dist_for_projection_plane;
-		draw_strip(wall_strip, data, i, data->color[i]);
+		draw_strip(wall_strip, data, i, ft_get_start(data, i));
 		i++;
 	}
 }

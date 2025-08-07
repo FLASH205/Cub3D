@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:02:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/05 18:17:37 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:10:08 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	is_wall(int x, int y, t_data *data)
 	return (0);
 }
 
-void	get_horizontal_dist(t_data *data, float angle, t_player *player)
+void	get_horizontal_dist(t_data *data, float angle, t_player *player, int i)
 {
 	float	x_h;
 	float	y_h;
@@ -64,10 +64,11 @@ void	get_horizontal_dist(t_data *data, float angle, t_player *player)
 		x_h += x_step;
 		y_h += y_step;
 	}
+	data->hit_x[i] = x_h;
 	data->h_dist = sqrtf(powf(x_h - player->pos.x, 2) + powf(y_h - player->pos.y, 2));
 }
 
-void	get_vertical_dist(t_data *data, float angle, t_player *player)
+void	get_vertical_dist(t_data *data, float angle, t_player *player, int i)
 {
 	float	x_v;
 	float	y_v;
@@ -93,6 +94,7 @@ void	get_vertical_dist(t_data *data, float angle, t_player *player)
 		x_v += x_step;
 		y_v += y_step;
 	}
+	data->hit_y[i] = y_v;
 	data->v_dist = sqrtf(powf(x_v - player->pos.x, 2) + powf(y_v - player->pos.y, 2));
 }
 
@@ -111,23 +113,30 @@ void	v2_raycast(t_data *data, t_player *player, float angle)
 		player->rayFaceUp = !player->rayFaceDown;
 		player->rayFaceLeft = (ray_angle >= PI / 2 && ray_angle <= 3 * PI / 2);
 		player->rayFaceRight = !player->rayFaceLeft;
-		get_horizontal_dist(data, ray_angle, player);
-		get_vertical_dist(data, ray_angle, player);
-		// if (data->h_dist < data->v_dist || fabsf(data->h_dist - data->v_dist) < 0.01)
+		get_horizontal_dist(data, ray_angle, player, i);
+		get_vertical_dist(data, ray_angle, player, i);	
 		if (data->h_dist < data->v_dist)
 		{
+			data->is_horizontal[i] = 1;
+			// data->is_vertical[i] = 0;
 			if (player->rayFaceUp)
-				data->color[i] = 0x6E6E6E;	// grey
+				// data->color[i] = 0x6E6E6E;	// grey
+				data->tex[i] = &data->no_map;
 			else
-				data->color[i] = 0x9E0E0E;	//!	red
+				// data->color[i] = 0x9E0E0E;	//!	red
+				data->tex[i] = &data->so_map;
 			min_dist = data->h_dist;
 		}
 		else
 		{
+			// data->is_vertical[i] = 1;
+			data->is_horizontal[i] = 0;
 			if (player->rayFaceLeft)
-				data->color[i] = 0xE3E50B;	//^ yellow
+				// data->color[i] = 0xE3E50B;	//^ yellow
+				data->tex[i] = &data->we_map;
 			else
-				data->color[i] = 0x6C00C2;	//~ purple
+				// data->color[i] = 0x6C00C2;	//~ purple
+				data->tex[i] = &data->ea_map;
 			min_dist = data->v_dist;
 		}
 		//?	Handle Fish-eye

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/07/31 14:42:44 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/05 13:26:54 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,17 +90,17 @@ int	load_file(t_data *data, int fd)
         if (!line)
             break ;
 		if (md_strncmp(line, "NO", 2) == 0)
-			data->no_map = line;
+			data->no_map.value = line;
 		else if (md_strncmp(line, "SO", 2) == 0)
-			data->so_map = line;
+			data->so_map.value = line;
 		else if (md_strncmp(line, "WE", 2) == 0)
-			data->we_map = line;
+			data->we_map.value = line;
 		else if (md_strncmp(line, "EA", 2) == 0)
-			data->ea_map = line;
+			data->ea_map.value = line;
 		else if (md_strncmp(line, "F", 1) == 0)
-			data->f_color = line;
+			data->f_color = 0;
 		else if (md_strncmp(line, "C", 1) == 0)
-			data->c_color = line;
+			data->c_color = 0;
 		else if (md_strchr(line, '1') || md_strchr(line, '0') || md_strchr(line, 'N') || md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W'))
 		{
 			if (order != 7)
@@ -114,7 +114,7 @@ int	load_file(t_data *data, int fd)
 		// free(line);
 	}
 	data->map[i] = NULL;
-	if (!data->no_map || !data->so_map || !data->we_map || !data->ea_map || !data->f_color || !data->c_color || !data->map[0])
+	if (!data->no_map.value || !data->so_map.value || !data->we_map.value || !data->ea_map.value || !data->map[0])
 		return (free_str(data->map), write(2, "Error\nNeed more categories\n", 27), 1);
     return (0);
 }
