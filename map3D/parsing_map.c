@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/05 15:16:25 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/12 11:35:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ int	load_file(t_data *data, int fd)
 		{
 			if (order != 7)
 				return (free(line), write(2, "Error\nOrder Problem !\n", 22), 1);
-			// data->map[i] = malloc(ft_strlen(line));
 			data->map[i] = md_strtrim(line, "\n");
 			if (!data->map[i])
 			{
@@ -337,6 +336,8 @@ int	check_if_closed(t_data *data)
 		len_rows = ft_strlen(data->map[i]);
 		if (data->map[i][0] != '1' && data->map[i][0] != ' ')
 			return (write(2, "Error\nMap must be closed\n", 25), 1);
+		if (data->map[i][0] == '\n')
+			return (write(2, "Error\nMap has a newline\n", 24), 1);
 		if (data->map[i][len_rows - 1] != '1')
 			return (write(2, "Error\nMap must be closed\n", 25), 1);
 		i++;
@@ -348,12 +349,41 @@ int	check_if_closed(t_data *data)
 	return (0);
 }
 
+int	check_new_line(char *filename)
+{
+	char *line;
+	int	fd;
 
-int	pasre_map(t_data *data)
+	fd = open(filename, O_RDONLY, 0644);
+	if (fd == -1)
+		return (perror("Error\n"), 1);
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (line[0] == '1')
+			break ;
+		free(line);
+	}
+	while (1)
+	{
+		line = get_next_line(fd);
+		if (!line)
+			break ;
+		if (line[0] == '\n')
+			return (write(2, "Error\nMap has a newline\n", 24), 1);
+		free(line);
+	}
+	return (close(fd), free(line), 0);
+}
+
+
+int	pasre_map(t_data *data, char *filename)
 {
 	if (check_component(data) == 1)
 		return (1);
 	if (check_if_closed(data) == 1)
+		return (1);
+	if (check_new_line(filename) == 1)
 		return (1);
 	return (0);
 }
@@ -386,9 +416,9 @@ int	parsing_file(t_data *data, char *file_name)
 		return (perror("Error\n"), 1);
 	if (load_file(data, fd))
 		return (1);
-	if (pasre_map(data) == 1)
+	if (pasre_map(data, file_name) == 1)
 		return (1);
-	if(claim_wd_line(data))
+	if (claim_wd_line(data))
 		return (1);
 	return (0);
 }

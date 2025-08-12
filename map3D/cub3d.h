@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/12 09:57:35 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/12 10:44:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define PLAYER_RADIUS 6
 # define ESC 53
 # define P_SPEED 36	//*	player speed
-# define ROT_SPEED 0.05	//*	rotate speed
+# define ROT_SPEED 0.1	//*	rotate speed
 # define SIZE 32
 # define UP 13
 # define DOWN 1
@@ -132,6 +132,7 @@ int		md_strchr(const char *s, int c);
 int		md_isdigit(int c);
 int		md_isalpha(int c);
 long	md_atoi(const char *str);
+char	*md_itoa(int n);
 int		ft_puthex(unsigned long num, char *base);
 void	free_str(char **str);
 

@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 17:15:22 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/04 10:55:42 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/12 10:47:34 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,4 +179,49 @@ long	md_atoi(const char *str)
 		i++;
 	}
 	return (t * sign);
+}
+
+int	get_length(int n)
+{
+	int	len;
+
+	len = 1;
+	if (n < 0)
+		len++;
+	while (n / 10 != 0)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+char	*md_itoa(int n)
+{
+	char	*result;
+	int		len;
+	long	num;
+	int		is_negative;
+
+	num = n;
+	len = get_length(n);
+	result = malloc((len * sizeof(char)) + 1);
+	if (!result)
+		return (perror("Error\n"), NULL);
+	result[len] = '\0';
+	is_negative = 0;
+	if (num < 0)
+	{
+		is_negative = 1;
+		result[0] = '-';
+		num = -num;
+	}
+	while (--len >= 0)
+	{
+		if (is_negative && len == 0)
+			break ;
+		result[len] = (num % 10) + '0';
+		num /= 10;
+	}
+	return (result);
 }
