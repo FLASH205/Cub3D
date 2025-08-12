@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/07 17:57:14 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/12 09:58:14 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,25 +86,25 @@ int	handle_keys(int key, t_data *data)
 		new_x = player->pos.x + player->dir.x * P_SPEED;
 		new_y = player->pos.y + player->dir.y * P_SPEED;
 	}
-	if (key == DOWN)
+	else if (key == DOWN)
 	{
 		new_x = player->pos.x - player->dir.x * P_SPEED;
 		new_y = player->pos.y - player->dir.y * P_SPEED;
 	}
-	if (key == A_RIGHT)
-		rotate_player(player, ROT_SPEED);
-	if (key == A_LEFT)
-		rotate_player(player, -ROT_SPEED);
-	if (key == RIGHT)
+	else if (key == RIGHT)
 	{
 		new_x = player->pos.x + -player->dir.y * P_SPEED;
 		new_y = player->pos.y + player->dir.x * P_SPEED;
 	}
-	if (key == LEFT)
+	else if (key == LEFT)
 	{
 		new_x = player->pos.x + player->dir.y * P_SPEED;
 		new_y = player->pos.y + -player->dir.x * P_SPEED;
 	}
+	else if (key == A_RIGHT)
+		rotate_player(player, ROT_SPEED);
+	else if (key == A_LEFT)
+		rotate_player(player, -ROT_SPEED);
 	//~ check collision before moving (Bonus)____________
 	if (!is_collision(new_x, player->pos.y, data->map))
 		player->pos.x = new_x;
@@ -113,6 +113,6 @@ int	handle_keys(int key, t_data *data)
 
 	//* redraw___________________
 	ft_draw_map(data);
-	mlx_put_image_to_window(data->mlx_ptr, data->window, data->image->img, 0, 0);
+	// mlx_put_image_to_window(data->mlx_ptr, data->window, data->image->img, 0, 0);
 	return (1);
 }

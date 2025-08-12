@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/07 17:55:37 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/12 10:01:20 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	main(int ac, char **av)
 	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
+	data.current = 0;
 	data.no_map.value = NULL;
 	data.so_map.value = NULL;
 	data.ea_map.value = NULL;
@@ -114,9 +115,12 @@ int	main(int ac, char **av)
 		return (ft_clean_all(&data), 1);
 	if (set_imgs(&data))
 		return (1);
+	if (set_frames(&data))
+		return (1);
 	ft_draw_map(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
-	mlx_hook(data.window, 2, 1L<<0, handle_keys, &data);
+	mlx_hook(data.window, 2, 0, handle_keys, &data);
 	mlx_hook(data.window, 17, 0, click_cross, &data);
+	mlx_loop_hook(data.mlx_ptr, animation_phase, &data);
 	return (mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
 }

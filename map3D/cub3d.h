@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/07 18:44:15 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/12 09:57:35 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,11 @@
 #  define BUFFER_SIZE  1
 # endif
 
+# define NUM_PIC 86
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 10	//*	player speed
+# define P_SPEED 36	//*	player speed
 # define ROT_SPEED 0.05	//*	rotate speed
 # define SIZE 32
 # define UP 13
@@ -86,6 +87,7 @@ typedef struct s_data
 	int			c_color;
 	int			add_x;
 	int			add_y;
+	int			current;
 	float		hit_x[WIDTH]; // horizontal
 	float		hit_y[WIDTH]; // vertical
 	float		h_dist;
@@ -96,6 +98,7 @@ typedef struct s_data
 	int			is_horizontal[WIDTH];
 	float		dist_rays[WIDTH];
 	// int			color[WIDTH];
+	t_image		frames[NUM_PIC];
 }	t_data;
 
 char	*get_next_line(int fd);
@@ -111,6 +114,8 @@ int		handle_keys(int key, t_data *data);
 void	v2_raycast(t_data *data, t_player *player, float angle);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
 float	normalize_angle(float angle);
+int		set_frames(t_data *data);
+int		animation_phase(t_data *data);
 
 //                         MOHA FUNCTIONS
 
