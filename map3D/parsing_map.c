@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/12 11:35:44 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/12 13:19:33 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,6 +349,23 @@ int	check_if_closed(t_data *data)
 	return (0);
 }
 
+int is_only_spaces(char *s)
+{
+	int	i;
+
+	i = 0;
+    if (!s || s[i] == '\0')
+        return (1);
+    while (s[i])
+    {
+        if (s[i] != ' ' && s[i] != '\t'
+			&& s[i] != '\n' && s[i] != '\r')
+            return (0);
+        i++;
+    }
+    return 1;
+}
+
 int	check_new_line(char *filename)
 {
 	char *line;
@@ -366,16 +383,17 @@ int	check_new_line(char *filename)
 	}
 	while (1)
 	{
-		line = get_next_line(fd);
 		if (!line)
 			break ;
+		if (is_only_spaces(line) == 1)
+			return (free(line), write(2, "Error\nline is empty\n", 20), 1);
 		if (line[0] == '\n')
 			return (write(2, "Error\nMap has a newline\n", 24), 1);
 		free(line);
+		line = get_next_line(fd);
 	}
 	return (close(fd), free(line), 0);
 }
-
 
 int	pasre_map(t_data *data, char *filename)
 {

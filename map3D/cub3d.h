@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/12 10:44:44 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/12 13:00:34 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // # include "/home/rd_md_haker/Documents/mlx/mlx.h"
 # include "mlx.h"
 # include <stdio.h>
+# include <string.h>//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 # include <stdlib.h>
 # include <fcntl.h>
 # include <math.h>
@@ -29,7 +30,7 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 36	//*	player speed
+# define P_SPEED 25	//*	player speed
 # define ROT_SPEED 0.1	//*	rotate speed
 # define SIZE 32
 # define UP 13
