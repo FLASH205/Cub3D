@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/12 15:54:23 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:25:25 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #  define BUFFER_SIZE  1
 # endif
 
-# define NUM_PIC 86
+# define NUM_PIC 69
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
@@ -40,7 +40,7 @@
 # define A_RIGHT 124
 # define FOV PI / 3
 # define RAY_STEP 1
-# define WIDTH 1280
+# define WIDTH 1504
 # define HEIGHT 768
 
 typedef struct s_image
