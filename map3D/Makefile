@@ -17,7 +17,7 @@ SRC = \
 	utils_func.c \
 	utils_splite.c \
 	upload_imgs.c \
-	animation_phase.c
+	animation_phase_bonus.c
 
 OBJ = $(SRC:.c=.o)
 

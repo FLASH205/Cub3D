@@ -6,7 +6,7 @@
 /*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/13 13:25:25 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/13 15:10:14 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 25	//*	player speed
+# define P_SPEED 35	//*	player speed
 # define ROT_SPEED 0.1	//*	rotate speed
 # define SIZE 32
 # define UP 13
