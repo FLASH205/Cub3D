@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/12 13:19:33 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/17 09:47:19 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int	load_file(t_data *data, int fd)
 			data->f_color = parse_rgb(line);
 		else if (md_strncmp(line, "C", 1) == 0)
 			data->c_color = parse_rgb(line);
-		else if (md_strchr(line, '1') || md_strchr(line, '0') || md_strchr(line, 'N') || md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W'))
+		else if (md_strchr(line, '1') || md_strchr(line, '0') || md_strchr(line, 'N') || md_strchr(line, 'S') || md_strchr(line, 'E') || md_strchr(line, 'W') || md_strchr(line, 'D'))
 		{
 			if (order != 7)
 				return (free(line), write(2, "Error\nOrder Problem !\n", 22), 1);
@@ -219,7 +219,7 @@ int	check_deff_co(t_data *data)
 			if (data->map[i][j] != '1' && data->map[i][j] != '0'
 				&& data->map[i][j] != 'N' && data->map[i][j] != 'E'
 				&& data->map[i][j] != 'S' && data->map[i][j] != 'W'
-				&& data->map[i][j] != ' ')
+				&& data->map[i][j] != ' ' && data->map[i][j] != 'D')
 				return (0);
 			j++;	
 		}
@@ -395,6 +395,26 @@ int	check_new_line(char *filename)
 	return (close(fd), free(line), 0);
 }
 
+int	check_door(t_data *data)
+{
+	int i;
+	int j;
+
+	i = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'D' && (data->map[i][j + 1] != 'D' || ))	//! should complete that!!___________
+				return (write(2, "Error\nDoor must be into 1 (1D1)\n", 32), 1);
+			j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
 int	pasre_map(t_data *data, char *filename)
 {
 	if (check_component(data) == 1)
@@ -402,6 +422,8 @@ int	pasre_map(t_data *data, char *filename)
 	if (check_if_closed(data) == 1)
 		return (1);
 	if (check_new_line(filename) == 1)
+		return (1);
+	if (check_door(data) == 1)
 		return (1);
 	return (0);
 }

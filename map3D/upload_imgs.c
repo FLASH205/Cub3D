@@ -6,11 +6,39 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/12 10:49:07 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/17 09:50:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_door2(t_data *data)
+{
+	int	i;
+	int	g;
+
+	i = 0;
+	data->is_door = 0;
+	while (data->map[i])
+	{
+		if (md_strchr(data->map[i], 'D') == 1)
+		{
+			data->is_door = 1;
+			break ;
+		}
+		i++;
+	}
+	if (data->is_door)
+	{
+		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr, "door.xpm",
+			&data->door.width, &data->door.height);
+		if (!data->door.img)
+			return (0);
+		data->door.addr = mlx_get_data_addr(data->door.img,
+			&data->door.bpp, &data->door.l_size, &g);
+	}
+	return (1);
+}
 
 int	set_imgs(t_data *data)
 {
@@ -25,7 +53,7 @@ int	set_imgs(t_data *data)
 	data->ea_map.img = mlx_xpm_file_to_image(data->mlx_ptr, data->ea_map.value,
 			&data->ea_map.width, &data->ea_map.height);
 	if (!data->no_map.img || !data->so_map.img
-		|| !data->ea_map.img || !data->we_map.img)
+		|| !data->ea_map.img || !data->we_map.img || !check_door2(data))
 		return (write(2, "Error\ntextures not found\n", 25), 1);
 	data->no_map.addr = mlx_get_data_addr(data->no_map.img,
 			&data->no_map.bpp, &data->no_map.l_size, &g);

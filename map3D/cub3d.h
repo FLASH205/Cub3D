@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/13 15:10:14 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/14 14:48:15 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ typedef struct s_data
 	t_image		so_map;
 	t_image		we_map;
 	t_image		ea_map;
+	t_image		door;
 	t_image		*tex[WIDTH];
 	int			f_color;
 	int			c_color;
 	int			add_x;
 	int			add_y;
 	int			current;
+	int			is_door;
 	float		hit_x[WIDTH]; // horizontal
 	float		hit_y[WIDTH]; // vertical
 	float		h_dist;
