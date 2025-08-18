@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/17 09:47:19 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/17 10:45:12 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -406,7 +406,8 @@ int	check_door(t_data *data)
 		j = 0;
 		while (data->map[i][j])
 		{
-			if (data->map[i][j] == 'D' && (data->map[i][j + 1] != 'D' || ))	//! should complete that!!___________
+			if (data->map[i][j] == 'D' && ((data->map[i][j + 1] != '1' || data->map[i][j - 1] != '1')
+				&& (data->map[i + 1][j] != '1' || data->map[i - 1][j] != '1')))
 				return (write(2, "Error\nDoor must be into 1 (1D1)\n", 32), 1);
 			j++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upload_imgs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/17 09:50:44 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/18 08:09:55 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	check_door2(t_data *data)
 	}
 	if (data->is_door)
 	{
-		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr, "door.xpm",
+		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr, "Door_2.xpm",
 			&data->door.width, &data->door.height);
 		if (!data->door.img)
 			return (0);
@@ -107,6 +107,5 @@ int	set_frames(t_data *data)
 		free(img_name);
 		i++;
 	}
-	//!	All Of This Should Do It In While Loop____________________
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/14 14:48:15 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/18 12:58:29 by ybahmaz          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 35	//*	player speed
-# define ROT_SPEED 0.1	//*	rotate speed
+# define P_SPEED 25	//*	player speed
+# define ROT_SPEED 0.15	//*	rotate speed
 # define SIZE 32
+# define F_KEY 3
 # define UP 13
 # define DOWN 1
 # define RIGHT 2
@@ -114,10 +115,12 @@ void	reset_ray_face(t_player *player);
 // void	setup_player(t_data *data, t_player *player);
 int		handle_keys(int key, t_data *data);
 void	v2_raycast(t_data *data, t_player *player, float angle);
+float	get_correct_distance(t_data *data, t_player *player, int i, float angle);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
 float	normalize_angle(float angle);
 int		set_frames(t_data *data);
 int		animation_phase(t_data *data);
+void	open_close_door(t_data *data, t_player *player);
 
 //                         MOHA FUNCTIONS
 

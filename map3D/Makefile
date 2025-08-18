@@ -12,12 +12,14 @@ SRC = \
 	ft_draw_map.c \
 	handle_keys.c \
 	v2_raycast.c \
+	get_correct_dist.c \
 	parsing_map.c \
 	free_resourses.c \
 	utils_func.c \
 	utils_splite.c \
 	upload_imgs.c \
-	animation_phase_bonus.c
+	animation_phase_bonus.c \
+	open_close_door.c
 
 OBJ = $(SRC:.c=.o)
 
