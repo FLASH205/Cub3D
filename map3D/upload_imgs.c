@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   upload_imgs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/18 08:09:55 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/19 12:25:29 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	check_door2(t_data *data)
 	if (data->is_door)
 	{
 		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr, "Door_2.xpm",
-			&data->door.width, &data->door.height);
+				&data->door.width, &data->door.height);
 		if (!data->door.img)
 			return (0);
 		data->door.addr = mlx_get_data_addr(data->door.img,
-			&data->door.bpp, &data->door.l_size, &g);
+				&data->door.bpp, &data->door.l_size, &g);
 	}
 	return (1);
 }
@@ -93,7 +93,7 @@ char	*number_frames(void)
 
 int	set_frames(t_data *data)
 {
-	int 	i;
+	int		i;
 	char	*img_name;
 
 	i = 0;
@@ -102,8 +102,9 @@ int	set_frames(t_data *data)
 	{
 		img_name = number_frames();
 		data->frames[i].img = mlx_xpm_file_to_image(data->mlx_ptr,
-			img_name, &data->frames[i].width ,&data->frames[i].height);
-		if (!data->frames[i].img) return (write(2, "Error\nFailed to load one or more .xpm files.\n", 45), 1);
+				img_name, &data->frames[i].width, &data->frames[i].height);
+		if (!data->frames[i].img)
+			return (write(2, "Error\nFailed to load *.xpm files\n", 33), 1);
 		free(img_name);
 		i++;
 	}

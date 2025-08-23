@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   free_resourses.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rd_md_haker <rd_md_haker@student.42.fr>    #+#  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-07-31 09:34:11 by rd_md_haker       #+#    #+#             */
-/*   Updated: 2025-07-31 09:34:11 by rd_md_haker      ###   ########.fr       */
+/*   Created: 2025/07/31 09:34:11 by rd_md_haker       #+#    #+#             */
+/*   Updated: 2025/08/21 15:21:34 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    free_str(char **str)
+void	free_str(char **str)
 {
 	int	i;
 

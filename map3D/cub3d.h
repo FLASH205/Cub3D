@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/18 12:58:29 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/23 10:57:04 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include <unistd.h>
+// # Check space in the last
 // # include "/home/rd_md_haker/Documents/mlx/mlx.h"
 # include "mlx.h"
 # include <stdio.h>
@@ -29,10 +30,11 @@
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 25	//*	player speed
-# define ROT_SPEED 0.15	//*	rotate speed
+# define P_SPEED 25
+# define ROT_SPEED 0.15
 # define SIZE 32
 # define F_KEY 3
+# define TILE_SIZE 8 //Size of minimap
 # define UP 13
 # define DOWN 1
 # define RIGHT 2
@@ -69,6 +71,7 @@ typedef struct s_player
 	int			rayFaceLeft;
 	t_vector	pos;
 	t_vector	dir;
+	t_vector	plane;
 }	t_player;
 
 typedef struct s_data
@@ -89,6 +92,7 @@ typedef struct s_data
 	int			c_color;
 	int			add_x;
 	int			add_y;
+	int			hh;
 	int			current;
 	int			is_door;
 	float		hit_x[WIDTH]; // horizontal
@@ -115,7 +119,8 @@ void	reset_ray_face(t_player *player);
 // void	setup_player(t_data *data, t_player *player);
 int		handle_keys(int key, t_data *data);
 void	v2_raycast(t_data *data, t_player *player, float angle);
-float	get_correct_distance(t_data *data, t_player *player, int i, float angle);
+float	get_correct_distance(t_data *data, t_player *player,
+			int i, float angle);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
 float	normalize_angle(float angle);
 int		set_frames(t_data *data);
@@ -126,19 +131,34 @@ void	open_close_door(t_data *data, t_player *player);
 
 int		parsing_file(t_data *data, char *file_name);
 char	*parse_direction(char *line);
+int		load_file(t_data *data, int fd);
 int		is_safe_space(t_data *data, int i, int j);
+int		check_if_closed(t_data *data);
+int		name_file_check(char *file_name);
+int		claim_wd_line(t_data *data);
+int		count_width_height(t_data *data);
+int		check_component(t_data *data);
+int		check_new_line(char *filename);
+int		check_door(t_data *data);
 int		parse_rgb(char *line);
+char	*parse_direction(char *line);
 int		set_imgs(t_data *data);
+void	draw_mini_map(t_data *data);
+void	draw_player_mini(t_data *data);
+int		handel_mouse(int x, int y, t_data *data);
 char	**md_split(char const *s, char c);
 int		md_strncmp(const char *s1, const char *s2, size_t n);
 size_t	md_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*md_strtrim(char *s1, char *set);
 int		md_strchr(const char *s, int c);
+int		is_only_spaces(char *s);
 int		md_isdigit(int c);
+int		is_not_digit(char *str);
 int		md_isalpha(int c);
 long	md_atoi(const char *str);
 char	*md_itoa(int n);
 int		ft_puthex(unsigned long num, char *base);
 void	free_str(char **str);
+void	free_int(int *num);
 
 #endif

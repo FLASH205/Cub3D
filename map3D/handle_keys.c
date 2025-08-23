@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_keys.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 13:39:34 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/18 12:47:43 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/23 09:49:41 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,5 @@ int	handle_keys(int key, t_data *data)
 		player->pos.x = new_x;
 	if (!is_collision(player->pos.x, new_y, data->map))
 		player->pos.y = new_y;
-	return (ft_draw_map(data), 1);
+	return (ft_draw_map(data), draw_mini_map(data), 1);
 }

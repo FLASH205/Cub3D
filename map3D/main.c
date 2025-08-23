@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/18 10:19:20 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/23 09:52:37 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,12 @@ int	create_new_img(t_data *data, t_image *image)
 	return (1);
 }
 
+void f(){system("leaks cub3D");}
+
 int	main(int ac, char **av)
 {
 	t_data	data;
+	// atexit(f);
 	if (ac != 2)
 		return (write(2, "Should be two arguments\n", 24), 1);
 	data.player = (t_player []){{}};
@@ -102,6 +105,8 @@ int	main(int ac, char **av)
 	data.we_map.value = NULL;
 	data.h_dist = -1;
 	data.v_dist = -1;
+	// data.player->plane.x = 0.0;
+	// data.player->plane.y = 0.66;
 	if (parsing_file(&data, av[1]) == 1)
 		return (1);
 	init_map(&data);
@@ -118,8 +123,11 @@ int	main(int ac, char **av)
 	if (set_frames(&data))
 		return (1);
 	ft_draw_map(&data);
+	draw_mini_map(&data);
+	// draw_player_mini(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_hook(data.window, 2, 0, handle_keys, &data);
+	mlx_hook(data.window, 6, 0, handel_mouse, &data);
 	mlx_hook(data.window, 17, 0, click_cross, &data);
 	mlx_loop_hook(data.mlx_ptr, animation_phase, &data);
 	return (mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_correct_dist.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:14:57 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/18 10:56:22 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/08/19 12:46:13 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static float	vertical_dist(int i, float angle, t_player *player, t_data *data)
+static float	vertical_dist(int i, float angle,
+	t_player *player, t_data *data)
 {
 	float	x;
 	float	y;
@@ -35,7 +36,7 @@ static float	vertical_dist(int i, float angle, t_player *player, t_data *data)
 }
 
 float	get_correct_distance(t_data *data, t_player *player, int i, float angle)
-{ 
+{
 	float	x;
 	float	y;
 
