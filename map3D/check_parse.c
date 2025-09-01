@@ -6,11 +6,29 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:29:42 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/21 14:44:30 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:05:56 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+char	*parse_direction(char *line)
+{
+	int		i;
+	char	*trimmed;
+	char	*result;
+
+	i = 2;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	trimmed = md_strtrim(line + i, " \t\n");
+	if (!trimmed)
+		return (NULL);
+	result = ft_strdup(trimmed);
+	if (!result)
+		return (perror("Error\n"), NULL);
+	return (free(trimmed), result);
+}
 
 int	is_only_spaces(char *s)
 {
@@ -50,42 +68,6 @@ int	check_deff_co(t_data *data)
 		i++;
 	}
 	return (1);
-}
-
-int	check_door(t_data *data)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			if (data->map[i][j] == 'D' &&
-				((data->map[i - 1][j] && data->map[i - 1][j] == '1')
-				&& (data->map[i + 1][j] && data->map[i + 1][j] == '1'))
-				)
-				{
-					j++;
-					continue ;
-				}
-			if (data->map[i][j] == 'D' &&
-				((data->map[i][j + 1] && data->map[i][j + 1] == '1')
-				&& (data->map[i][j - 1] && data->map[i][j - 1] == '1'))
-				)
-				{
-					j++;
-					continue ;
-				}
-			else if (data->map[i][j] == 'D')
-				return (write(2,"Error\n-D- Must be between 1\n",28), 1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
 }
 
 int	check_new_line(char *filename)

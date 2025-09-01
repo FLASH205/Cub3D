@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/30 15:10:07 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 10:45:49 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	pasre_map(t_data *data, char *filename)
 {
 	if (check_component(data) == 1)
 		return (1);
+	if (check_player(data) == 1)
+		return (ft_clean_all(data), 1);
 	if (check_if_closed(data) == 1)
 		return (ft_clean_all(data), 1);
 	if (check_new_line(filename) == 1)

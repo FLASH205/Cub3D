@@ -29,6 +29,8 @@ SRC = \
 	check_rgb.c \
 	mouse_event_bonus.c \
 	draw_mini_map_bonus.c \
+	check_door_bonus.c \
+	init_map.c
 
 OBJ = $(SRC:.c=.o)
 

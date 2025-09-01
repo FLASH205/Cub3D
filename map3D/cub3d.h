@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/27 13:35:34 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:02:05 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define LEFT 0
 # define A_LEFT 123
 # define A_RIGHT 124
-# define FOV PI / 3
+# define FOV 1.04719755 // 60 degree
 # define RAY_STEP 1
 # define WIDTH 1504
 # define HEIGHT 768
@@ -69,10 +69,10 @@ typedef struct s_vector
 
 typedef struct s_player
 {
-	int			rayFaceUp;
-	int			rayFaceDown;
-	int			rayFaceRight;
-	int			rayFaceLeft;
+	int			ray_face_up;
+	int			ray_face_down;
+	int			ray_face_right;
+	int			ray_face_left;
 	t_vector	pos;
 	t_vector	dir;
 	t_vector	plane;
@@ -80,10 +80,10 @@ typedef struct s_player
 
 typedef struct s_minimap
 {
-	int 	start_x;
-	int 	end_x;
-	int 	start_y;
-	int 	end_y;
+	int		start_x;
+	int		end_x;
+	int		start_y;
+	int		end_y;
 	int		center_x;
 	int		center_y;
 	int		px;
@@ -100,8 +100,6 @@ typedef struct s_data
 	int			w_map;
 	int			h_map;
 	int			*arr_width;
-	int			*arr_inx_map;
-	int			*arr_hg_map;
 	t_image		no_map;
 	t_image		so_map;
 	t_image		we_map;
@@ -137,8 +135,10 @@ int		ft_strlen(char *str);
 void	ft_clean_all(t_data *data);
 void	ft_draw_map(t_data *data);
 void	reset_ray_face(t_player *player);
-// void	setup_player(t_data *data, t_player *player);
+int		click_cross(t_data *data);
 int		handle_keys(int key, t_data *data);
+void	init_map(t_data *data);
+int		create_new_img(t_data *data, t_image *image);
 void	v2_raycast(t_data *data, t_player *player, float angle);
 float	get_correct_distance(t_data *data, t_player *player,
 			int i, float angle);
@@ -161,13 +161,13 @@ int		count_width_height(t_data *data);
 int		check_component(t_data *data);
 int		check_new_line(char *filename);
 int		check_door(t_data *data);
+int		check_player(t_data *data);
 int		parse_rgb(char *line);
 char	*parse_direction(char *line);
 char	*number_frames(char *path);
 int		set_imgs(t_data *data);
 void	draw_mini_map(t_data *data);
-// void	draw_mini_map(t_data *data, int px, int py);
-char *num_frames(int i, char *path);
+char	*num_frames(int i, char *path);
 void	claim_view(t_data *data);
 void	draw_player_mini(t_data *data);
 int		handel_mouse(int x, int y, t_data *data);

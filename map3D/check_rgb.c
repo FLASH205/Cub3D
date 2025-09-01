@@ -6,28 +6,21 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:33:55 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/30 15:05:54 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:10:30 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-char	*parse_direction(char *line)
+int	alloc_utils(char **str, char ***rgb)
 {
-	int		i;
-	char	*trimmed;
-	char	*result;
-
-	i = 2;
-	while (line[i] == ' ' || line[i] == '\t')
-		i++;
-	trimmed = md_strtrim(line + i, " \t\n");
-	if (!trimmed)
-		return (NULL);
-	result = ft_strdup(trimmed);
-	if (!result)
-		return (perror("Error\n"), NULL);
-	return (free(trimmed), result);
+	*str = md_strtrim(*str, "\n");
+	if (!*str)
+		return (perror("Error\n"), 1);
+	*rgb = md_split(*str, ',');
+	if (!*rgb)
+		return (perror("Error\n"), free(*str), 1);
+	return (0);
 }
 
 int	convert_to_hex(char *str)
@@ -38,16 +31,14 @@ int	convert_to_hex(char *str)
 	int		hex_num;
 	char	**rgb;
 
-	str = md_strtrim(str, "\n");
-	if (!str)
-		return (perror("Error\n"), 1);
-	rgb = md_split(str, ',');
-	if (!rgb)
-		return (perror("Error\n"), free(str), 1);
+	rgb = NULL;
+	if (alloc_utils(&str, &rgb) == 1)
+		return (1);
 	while (*rgb)
 	{
 		if (is_not_digit(*rgb) == 1)
-			return (write(2, "Error\nnot digit\n", 16), free_str(rgb), free(str), 1);
+			return (write(2, "Error\nnot digit\n", 16),
+				free_str(rgb), free(str), 1);
 		rgb++;
 	}
 	rgb -= 3;
@@ -55,7 +46,8 @@ int	convert_to_hex(char *str)
 	g_color = md_atoi(rgb[1]);
 	b_color = md_atoi(rgb[2]);
 	if (r_color > 255 || g_color > 255 || b_color > 255)
-		return (write(2, "Error\nThe number must be between 0-255\n", 39), free_str(rgb), free(str), 1);
+		return (write(2, "Error\nThe number must be between 0-255\n", 39),
+			free_str(rgb), free(str), 1);
 	hex_num = (r_color << 16) | (g_color << 8) | b_color;
 	return (free_str(rgb), free(str), hex_num);
 }

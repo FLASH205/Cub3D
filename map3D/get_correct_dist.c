@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:14:57 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/19 12:46:13 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:15:21 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static float	vertical_dist(int i, float angle,
 	data->is_horizontal[i] = 0;
 	x = player->pos.x + cosf(angle) * data->v_dist;
 	y = player->pos.y + sinf(angle) * data->v_dist;
-	if (player->rayFaceRight)
+	if (player->ray_face_right)
 	{
 		x += 0.001;
 		y += 0.001;
 	}
-	if (player->rayFaceLeft)
+	if (player->ray_face_left)
 		data->tex[i] = &data->we_map;
 	else
 		data->tex[i] = &data->ea_map;
@@ -45,12 +45,12 @@ float	get_correct_distance(t_data *data, t_player *player, int i, float angle)
 		data->is_horizontal[i] = 1;
 		x = player->pos.x + cosf(angle) * data->h_dist;
 		y = player->pos.y + sinf(angle) * data->h_dist;
-		if (player->rayFaceDown)
+		if (player->ray_face_down)
 		{
 			x += 0.001;
 			y += 0.001;
 		}
-		if (player->rayFaceUp)
+		if (player->ray_face_up)
 			data->tex[i] = &data->no_map;
 		else
 			data->tex[i] = &data->so_map;

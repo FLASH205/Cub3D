@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:13:44 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/21 14:59:34 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:07:59 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,37 @@ int	claim_wd_line(t_data *data)
 	return (0);
 }
 
-int	count_width_height_helper(char *line, int fd
-	, int *counter, int *max_width)
+int	is_param_line(char *line)
 {
-	int	len_line;
-	char	*strim_str;
+	return (!md_strncmp(line, "NO", 2) || !md_strncmp(line, "SO", 2)
+		|| !md_strncmp(line, "WE", 2) || !md_strncmp(line, "EA", 2)
+		|| !md_strncmp(line, "F", 1) || !md_strncmp(line, "C", 1));
+}
 
-	len_line = 0;
-	strim_str = NULL;
+int	count_width_height_helper(char *line, int fd,
+		int *counter, int *max_width)
+{
+	char	*trimmed;
+	int		len;
+
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (!line)
 			break ;
-		if (!md_strncmp(line, "NO", 2)
-			|| !md_strncmp(line, "SO", 2) || !md_strncmp(line, "WE", 2)
-			|| !md_strncmp(line, "EA", 2)
-			|| !md_strncmp(line, "F", 1) || !md_strncmp(line, "C", 1))
-			{
-				free(line);
-				line = get_next_line(fd);
-			}
-		else if ((md_strchr(line, '1')
-				|| md_strchr(line, '0') || md_strchr(line, 'N')
-				|| md_strchr(line, 'S') || md_strchr(line, 'E')
-				|| md_strchr(line, 'W')))
+		if (!is_param_line(line)
+			&& (md_strchr(line, '1') || md_strchr(line, '0')
+				|| md_strchr(line, 'N') || md_strchr(line, 'S')
+				|| md_strchr(line, 'E') || md_strchr(line, 'W')))
 		{
 			(*counter)++;
-			strim_str = md_strtrim(line, "\n");
-			if (!strim_str)
-				return (perror("Error\n"), 1);
-			len_line = ft_strlen(strim_str);
-			if (len_line >= *max_width)
-				*max_width = len_line;
-			free(strim_str);
+			trimmed = md_strtrim(line, "\n");
+			if (!trimmed)
+				return (free(line), perror("Error\n"), 1);
+			len = ft_strlen(trimmed);
+			if (len > *max_width)
+				*max_width = len;
+			free(trimmed);
 		}
 		free(line);
 	}

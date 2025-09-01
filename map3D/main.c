@@ -6,116 +6,64 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/30 15:26:22 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 13:03:02 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	reset_ray_face(t_player *player)
+void	f(void)
 {
-	player->rayFaceRight = 0;
-	player->rayFaceLeft = 0;
-	player->rayFaceUp = 0;
-	player->rayFaceDown = 0;
+	system("leaks cub3D");
 }
 
-int	click_cross(t_data *data)
+int	init_elements(t_data *data)
 {
-	ft_clean_all(data);
-	exit(0);
+	data->w_map = 0;
+	data->h_map = 0;
+	data->current = 0;
+	data->no_map.value = NULL;
+	data->so_map.value = NULL;
+	data->ea_map.value = NULL;
+	data->we_map.value = NULL;
+	data->h_dist = -1;
+	data->v_dist = -1;
+	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		return (1);
+	return (0);
 }
 
-void	get_positions(t_player *player, char c, int i, int j)
+void	next_phase(t_data *data)
 {
-	player->pos.x = j * SIZE + SIZE / 2;
-	player->pos.y = i * SIZE + SIZE / 2;
-	if (c == 'N')
-	{
-		player->dir.x = 0;
-		player->dir.y = -1;
-	}
-	else if (c == 'S')
-	{
-		player->dir.x = 0;
-		player->dir.y = 1;
-	}
-	else if (c == 'W')
-	{
-		player->dir.x = -1;
-		player->dir.y = 0;
-	}
-	else if (c == 'E')
-	{
-		player->dir.x = 1;
-		player->dir.y = 0;
-	}
+	ft_draw_map(data);
+	draw_mini_map(data);
+	mlx_hook(data->window, 2, 0, handle_keys, data);
+	mlx_hook(data->window, 6, 0, handel_mouse, data);
+	mlx_hook(data->window, 17, 0, click_cross, data);
+	mlx_loop_hook(data->mlx_ptr, animation_phase, data);
 }
-
-void	init_map(t_data *data)
-{
-	int	i;
-	int	j;
-	int	n;
-
-	i = 0;
-	n = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j] && !n)
-		{
-			if (data->map[i][j] == 'N' || data->map[i][j] == 'S'
-				|| data->map[i][j] == 'W' || data->map[i][j] == 'E')
-				(get_positions(data->player, data->map[i][j], i, j), n = 1);
-			j++;
-		}
-		i++;
-	}
-	reset_ray_face(data->player);
-}
-
-int	create_new_img(t_data *data, t_image *image)
-{
-	int	g;
-
-	image->img =  mlx_new_image(data->mlx_ptr, WIDTH, HEIGHT);
-	if (!image->img)
-		return (0);
-	image->addr = mlx_get_data_addr(image->img, &image->bpp, &image->l_size, &g);
-	return (1);
-}
-
-void f(){system("leaks cub3D");}
 
 int	main(int ac, char **av)
 {
 	t_data	data;
+
 	atexit(f);
 	if (ac != 2)
 		return (write(2, "Should be two arguments\n", 24), 1);
 	data.player = (t_player []){{}};
 	data.mini_m = (t_minimap []){{}};
 	data.image = (t_image []){{}};
-	data.w_map = 0;
-	data.h_map = 0;
-	data.current = 0;
-	data.no_map.value = NULL;
-	data.so_map.value = NULL;
-	data.ea_map.value = NULL;
-	data.we_map.value = NULL;
-	data.h_dist = -1;
-	data.v_dist = -1;
-	data.mlx_ptr = mlx_init();
-	if (!data.mlx_ptr)
+	if (init_elements(&data) == 1)
 		return (1);
 	if (parsing_file(&data, av[1]) == 1)
-		return (1);
+		return (exit(1), 1);
 	init_map(&data);
-	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Loading...");
-	if (!data.window) 
+	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3D");
+	if (!data.window)
 		return (ft_clean_all(&data), 1);
-	mlx_string_put(data.mlx_ptr, data.window, WIDTH/2 - 50, HEIGHT/2, 0xFFFFFF, "Loading...");
+	mlx_string_put(data.mlx_ptr, data.window,
+		WIDTH / 2 - 50, HEIGHT / 2, 0xFFFFFF, "Loading...");
 	mlx_do_sync(data.mlx_ptr);
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
@@ -123,17 +71,5 @@ int	main(int ac, char **av)
 		return (1);
 	if (set_frames(&data))
 		return (1);
-	mlx_clear_window(data.mlx_ptr, data.window);
-	mlx_destroy_window(data.mlx_ptr, data.window);
-	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3D");
-	if (!data.window) 
-		return (ft_clean_all(&data), 1);
-	ft_draw_map(&data);
-	draw_mini_map(&data);
-	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
-	mlx_hook(data.window, 2, 0, handle_keys, &data);
-	mlx_hook(data.window, 6, 0, handel_mouse, &data);
-	mlx_hook(data.window, 17, 0, click_cross, &data);
-	mlx_loop_hook(data.mlx_ptr, animation_phase, &data);
-	return (mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
+	return (next_phase(&data), mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
 }

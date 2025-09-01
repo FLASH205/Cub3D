@@ -6,11 +6,36 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 10:06:42 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/21 15:34:05 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:23:34 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	check_player(t_data *data)
+{
+	int	i;
+	int	j;
+	int	player_counter;
+
+	i = 0;
+	player_counter = 0;
+	while (data->map[i])
+	{
+		j = 0;
+		while (data->map[i][j])
+		{
+			if (data->map[i][j] == 'W' || data->map[i][j] == 'S'
+				|| data->map[i][j] == 'E' || data->map[i][j] == 'N')
+				player_counter++;
+			j++;
+		}
+		i++;
+	}
+	if (player_counter > 1)
+		return (write(2, "Error\nYou have more than player\n", 32), 1);
+	return (0);
+}
 
 int	parse_identifier(t_data *data, char *line)
 {
@@ -33,7 +58,7 @@ int	parse_identifier(t_data *data, char *line)
 
 int	parse_map_line(t_data *data, char *line, int *i, int order)
 {
-	char *strim_strs;
+	char	*strim_strs;
 
 	strim_strs = NULL;
 	if (order != 7)
