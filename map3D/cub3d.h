@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/23 10:57:04 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/27 13:35:34 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,18 @@
 # endif
 
 # define NUM_PIC 69
+# define NUM_PIC_LOD 50
 # define PI 3.14159265
 # define PLAYER_RADIUS 6
 # define ESC 53
-# define P_SPEED 25
-# define ROT_SPEED 0.15
+# define P_SPEED 5
+# define ROT_SPEED 2.5
 # define SIZE 32
 # define F_KEY 3
-# define TILE_SIZE 8 //Size of minimap
+# define TILE_SIZE 32 //Size of minimap
+# define PLAYER_SIZE 8 //Size of minimap
+# define MINI_TILE 15 //Size of minimap
+# define VIEW_SIZE 5 //Size of view
 # define UP 13
 # define DOWN 1
 # define RIGHT 2
@@ -74,6 +78,20 @@ typedef struct s_player
 	t_vector	plane;
 }	t_player;
 
+typedef struct s_minimap
+{
+	int 	start_x;
+	int 	end_x;
+	int 	start_y;
+	int 	end_y;
+	int		center_x;
+	int		center_y;
+	int		px;
+	int		py;
+	int		draw_x;
+	int		draw_y;
+}	t_minimap;
+
 typedef struct s_data
 {
 	void		*mlx_ptr;
@@ -82,6 +100,8 @@ typedef struct s_data
 	int			w_map;
 	int			h_map;
 	int			*arr_width;
+	int			*arr_inx_map;
+	int			*arr_hg_map;
 	t_image		no_map;
 	t_image		so_map;
 	t_image		we_map;
@@ -92,13 +112,13 @@ typedef struct s_data
 	int			c_color;
 	int			add_x;
 	int			add_y;
-	int			hh;
 	int			current;
 	int			is_door;
 	float		hit_x[WIDTH]; // horizontal
 	float		hit_y[WIDTH]; // vertical
 	float		h_dist;
 	float		v_dist;
+	t_minimap	*mini_m;
 	t_player	*player;
 	t_image		*image;
 	// int			is_vertical[WIDTH];
@@ -106,6 +126,7 @@ typedef struct s_data
 	float		dist_rays[WIDTH];
 	// int			color[WIDTH];
 	t_image		frames[NUM_PIC];
+	t_image		lod[NUM_PIC_LOD];
 }	t_data;
 
 char	*get_next_line(int fd);
@@ -142,8 +163,12 @@ int		check_new_line(char *filename);
 int		check_door(t_data *data);
 int		parse_rgb(char *line);
 char	*parse_direction(char *line);
+char	*number_frames(char *path);
 int		set_imgs(t_data *data);
 void	draw_mini_map(t_data *data);
+// void	draw_mini_map(t_data *data, int px, int py);
+char *num_frames(int i, char *path);
+void	claim_view(t_data *data);
 void	draw_player_mini(t_data *data);
 int		handel_mouse(int x, int y, t_data *data);
 char	**md_split(char const *s, char c);

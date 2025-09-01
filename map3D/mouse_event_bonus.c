@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 19:43:46 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/23 10:06:25 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/23 14:16:44 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ int	handel_mouse(int x, int y, t_data *data)
 	if (last_x == -1)
 		last_x = x;
 	if (x > last_x)
-		rotate_player_mouse(data, 0.03);
+		rotate_player_mouse(data, 0.05);
 	else if (x < last_x)
-		rotate_player_mouse(data, -0.03);
+		rotate_player_mouse(data, -0.05);
 	last_x = x;
 	return (0);
 }

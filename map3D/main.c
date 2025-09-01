@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/23 09:52:37 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:26:22 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ void f(){system("leaks cub3D");}
 int	main(int ac, char **av)
 {
 	t_data	data;
-	// atexit(f);
+	atexit(f);
 	if (ac != 2)
 		return (write(2, "Should be two arguments\n", 24), 1);
 	data.player = (t_player []){{}};
+	data.mini_m = (t_minimap []){{}};
 	data.image = (t_image []){{}};
 	data.w_map = 0;
 	data.h_map = 0;
@@ -105,26 +106,30 @@ int	main(int ac, char **av)
 	data.we_map.value = NULL;
 	data.h_dist = -1;
 	data.v_dist = -1;
-	// data.player->plane.x = 0.0;
-	// data.player->plane.y = 0.66;
-	if (parsing_file(&data, av[1]) == 1)
-		return (1);
-	init_map(&data);
 	data.mlx_ptr = mlx_init();
 	if (!data.mlx_ptr)
 		return (1);
-	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3d");
+	if (parsing_file(&data, av[1]) == 1)
+		return (1);
+	init_map(&data);
+	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Loading...");
 	if (!data.window) 
 		return (ft_clean_all(&data), 1);
+	mlx_string_put(data.mlx_ptr, data.window, WIDTH/2 - 50, HEIGHT/2, 0xFFFFFF, "Loading...");
+	mlx_do_sync(data.mlx_ptr);
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
 	if (set_imgs(&data))
 		return (1);
 	if (set_frames(&data))
 		return (1);
+	mlx_clear_window(data.mlx_ptr, data.window);
+	mlx_destroy_window(data.mlx_ptr, data.window);
+	data.window = mlx_new_window(data.mlx_ptr, WIDTH, HEIGHT, "Cub3D");
+	if (!data.window) 
+		return (ft_clean_all(&data), 1);
 	ft_draw_map(&data);
 	draw_mini_map(&data);
-	// draw_player_mini(&data);
 	mlx_put_image_to_window(data.mlx_ptr, data.window, data.image->img, 0, 0);
 	mlx_hook(data.window, 2, 0, handle_keys, &data);
 	mlx_hook(data.window, 6, 0, handel_mouse, &data);

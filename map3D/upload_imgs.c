@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/19 12:25:29 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:24:07 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	set_imgs(t_data *data)
 	return (0);
 }
 
-char	*number_frames(void)
+char	*number_frames(char *path)
 {
 	char		*tmp;
 	static int	i = 1;
@@ -76,7 +76,7 @@ char	*number_frames(void)
 	new_str = NULL;
 	num_str = NULL;
 	tmp = NULL;
-	tmp = ft_strdup("Frames/frame_");
+	tmp = ft_strdup(path);
 	if (!tmp)
 		return (NULL);
 	num_str = md_itoa(i);
@@ -100,11 +100,12 @@ int	set_frames(t_data *data)
 	img_name = NULL;
 	while (i < NUM_PIC)
 	{
-		img_name = number_frames();
+		img_name = number_frames("Frames/frame_");
 		data->frames[i].img = mlx_xpm_file_to_image(data->mlx_ptr,
 				img_name, &data->frames[i].width, &data->frames[i].height);
 		if (!data->frames[i].img)
-			return (write(2, "Error\nFailed to load *.xpm files\n", 33), 1);
+			return (write(2, "Error\nFailed to load *.xpm files\n", 33),
+				free(img_name), 1);
 		free(img_name);
 		i++;
 	}

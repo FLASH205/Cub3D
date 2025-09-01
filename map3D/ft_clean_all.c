@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 11:19:46 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/23 10:04:28 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:22:32 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,21 @@ void	ft_clean_all(t_data *data)
 	if (data->image->img)
 		mlx_destroy_image(data->mlx_ptr, data->image->img);
 	if (data->no_map.img)
-		(free(data->no_map.value)
-			, mlx_destroy_image(data->mlx_ptr, data->no_map.img));
+		mlx_destroy_image(data->mlx_ptr, data->no_map.img);
 	if (data->so_map.img)
-		(free(data->so_map.value)
-			, mlx_destroy_image(data->mlx_ptr, data->so_map.img));
+		mlx_destroy_image(data->mlx_ptr, data->so_map.img);
 	if (data->we_map.img)
-		(free(data->we_map.value)
-			, mlx_destroy_image(data->mlx_ptr, data->we_map.img));
+		mlx_destroy_image(data->mlx_ptr, data->we_map.img);
 	if (data->ea_map.img)
-		(free(data->ea_map.value)
-			, mlx_destroy_image(data->mlx_ptr, data->ea_map.img));
-	// if (data->no_map.value)
-	// 	free(data->no_map.value);
-	// if (data->so_map.value)
-	// 	free(data->so_map.value);
-	// if (data->ea_map.value)
-	// 	free(data->ea_map.value);
-	// if (data->we_map.value)
-	// 	free(data->we_map.value);
+		mlx_destroy_image(data->mlx_ptr, data->ea_map.img);
+	if (data->no_map.value)
+		free(data->no_map.value);
+	if (data->so_map.value)
+		free(data->so_map.value);
+	if (data->ea_map.value)
+		free(data->ea_map.value);
+	if (data->we_map.value)
+		free(data->we_map.value);
 	if (data->mlx_ptr)
 		free(data->mlx_ptr);
 	if (data->map)
