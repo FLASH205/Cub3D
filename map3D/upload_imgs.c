@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/30 15:24:07 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/03 13:32:36 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ int	set_imgs(t_data *data)
 			&data->ea_map.width, &data->ea_map.height);
 	if (!data->no_map.img || !data->so_map.img
 		|| !data->ea_map.img || !data->we_map.img || !check_door2(data))
-		return (write(2, "Error\ntextures not found\n", 25), 1);
+		return (write(2, "Error\ntextures not found\n", 25),
+			ft_clean_all(data), 1);
 	data->no_map.addr = mlx_get_data_addr(data->no_map.img,
 			&data->no_map.bpp, &data->no_map.l_size, &g);
 	data->so_map.addr = mlx_get_data_addr(data->so_map.img,

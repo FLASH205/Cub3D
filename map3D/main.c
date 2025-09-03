@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/01 13:03:02 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/03 13:34:54 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int	main(int ac, char **av)
 	if (!create_new_img(&data, data.image))
 		return (ft_clean_all(&data), 1);
 	if (set_imgs(&data))
-		return (1);
+		return (exit(1), 1);
 	if (set_frames(&data))
-		return (1);
+		return (exit(1), 1);
 	return (next_phase(&data), mlx_loop(data.mlx_ptr), ft_clean_all(&data), 0);
 }
