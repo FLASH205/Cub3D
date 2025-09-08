@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:08:50 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/21 14:45:03 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/08 13:27:22 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,30 @@ int	check_one_last(t_data *data)
 	return (0);
 }
 
-int	check_space_close(t_data *data)
-{
-	int	i;
-	int	j;
+// int	check_space_close(t_data *data)
+// {
+// 	int	i;
+// 	int	j;
 
-	i = 0;
-	while (data->map[i])
-	{
-		j = 0;
-		while (data->map[i][j])
-		{
-			while (data->map[i][j] && data->map[i][j] == ' ')
-				j++;
-			while (data->map[i][j] && data->map[i][j] != ' ')
-				j++;
-			if (data->map[i][j] == ' ' && is_safe_space(data, i, j))
-				return (write(2, "Error\nMap must be closed\n", 25), 1);
-			if (data->map[i][j])
-				j++;
-		}
-		i++;
-	}
-	return (0);
-}
+// 	i = 0;
+// 	while (data->map[i])
+// 	{
+// 		j = 0;
+// 		while (data->map[i][j])
+// 		{
+// 			while (data->map[i][j] && data->map[i][j] == ' ')
+// 				j++;
+// 			while (data->map[i][j] && data->map[i][j] != ' ')
+// 				j++;
+// 			// if (data->map[i][j] == ' ' && is_safe_space(data, i, j))
+// 			// 	return (write(2, "Error\nMap must be closed\n", 28), 1);
+// 			// if (data->map[i][j])
+// 			// 	j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	check_zero_null(t_data *data)
 {
@@ -88,6 +88,20 @@ int	check_zero_null(t_data *data)
 	return (0);
 }
 
+int	check_new_l(char *str)
+{
+	int i;
+	int len_str;
+
+	len_str = ft_strlen(str);
+	i = len_str - 1;
+	while (i >= 0 && str[i] == ' ')
+		i--;
+	if (str[i] != '1')
+		return (1);
+	return (0);
+}
+
 int	check_if_closed(t_data *data)
 {
 	int	i;
@@ -103,12 +117,12 @@ int	check_if_closed(t_data *data)
 			return (write(2, "Error\nMap must be closed\n", 25), 1);
 		if (data->map[i][0] == '\n')
 			return (write(2, "Error\nMap has a newline\n", 24), 1);
-		if (data->map[i][len_rows - 1] != '1')
+		if (check_new_l(data->map[i]) == 1)
 			return (write(2, "Error\nMap must be closed\n", 25), 1);
 		i++;
 	}
-	if (check_space_close(data) == 1)
-		return (1);
+	// if (check_space_close(data) == 1)
+	// 	return (1);
 	if (check_zero_null(data) == 1)
 		return (1);
 	return (0);

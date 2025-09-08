@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:33:55 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 11:10:30 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:56:35 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,16 @@
 
 int	alloc_utils(char **str, char ***rgb)
 {
-	*str = md_strtrim(*str, "\n");
-	if (!*str)
+	char *tmp;
+
+	tmp = *str;
+	tmp = md_strtrim(*str, "\n");
+	if (!tmp)
 		return (perror("Error\n"), 1);
-	*rgb = md_split(*str, ',');
+	*rgb = md_split(tmp, ',');
 	if (!*rgb)
-		return (perror("Error\n"), free(*str), 1);
-	return (0);
+		return (perror("Error\n"), 1);
+	return (free(tmp), 0);
 }
 
 int	convert_to_hex(char *str)
@@ -28,32 +31,32 @@ int	convert_to_hex(char *str)
 	int		r_color;
 	int		g_color;
 	int		b_color;
-	int		hex_num;
 	char	**rgb;
+	int		i;
 
-	rgb = NULL;
+	i = 0;
 	if (alloc_utils(&str, &rgb) == 1)
-		return (1);
-	while (*rgb)
+		return (-1);
+	while (rgb[i])
 	{
-		if (is_not_digit(*rgb) == 1)
+		if (is_not_digit(rgb[i]) == 1)
 			return (write(2, "Error\nnot digit\n", 16),
-				free_str(rgb), free(str), 1);
-		rgb++;
+				free_str(rgb), -1);
+		i++;
 	}
-	rgb -= 3;
 	r_color = md_atoi(rgb[0]);
 	g_color = md_atoi(rgb[1]);
 	b_color = md_atoi(rgb[2]);
 	if (r_color > 255 || g_color > 255 || b_color > 255)
 		return (write(2, "Error\nThe number must be between 0-255\n", 39),
-			free_str(rgb), free(str), 1);
-	hex_num = (r_color << 16) | (g_color << 8) | b_color;
-	return (free_str(rgb), free(str), hex_num);
+			free_str(rgb), -1);
+	return (free_str(rgb), (r_color << 16) | (g_color << 8) | b_color);
 }
 
 int	check_first_digits(char *line, int *i)
 {
+	if (line[*i] != ' ')
+		return (write(2, "Error\nno space\n", 15), 0);
 	while (line[*i] == ' ')
 		(*i)++;
 	if (!md_isdigit(line[*i]))
@@ -102,7 +105,7 @@ int	parse_rgb(char *line)
 			return (0);
 	}
 	hex = convert_to_hex(str);
-	if (hex == 1)
-		return (0);
+	if (hex == -1)
+		return (free(str), 0);
 	return (free(str), hex);
 }

@@ -6,16 +6,11 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/03 13:34:54 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/08 09:37:48 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	f(void)
-{
-	system("leaks cub3D");
-}
 
 int	init_elements(t_data *data)
 {
@@ -48,7 +43,6 @@ int	main(int ac, char **av)
 {
 	t_data	data;
 
-	atexit(f);
 	if (ac != 2)
 		return (write(2, "Should be two arguments\n", 24), 1);
 	data.player = (t_player []){{}};
