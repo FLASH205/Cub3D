@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:29:42 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/08 10:33:42 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/17 16:45:50 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*parse_direction(char *line)
 
 	i = 2;
 	if (line[i] != ' ')
-		return (write(2, "Error\nno space\n", 15), NULL);
+		return (NULL);
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	trimmed = md_strtrim(line + i, " \t\n");

@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 13:16:22 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/03 13:32:36 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/21 14:22:16 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	check_door2(t_data *data)
 	}
 	if (data->is_door)
 	{
-		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr, "Door_2.xpm",
+		data->door.img = mlx_xpm_file_to_image(data->mlx_ptr,
+				"textures/Door_2.xpm",
 				&data->door.width, &data->door.height);
 		if (!data->door.img)
 			return (0);

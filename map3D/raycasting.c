@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   v2_raycast.c                                       :+:      :+:    :+:   */
+/*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 17:02:17 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/01 12:48:16 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/20 17:51:42 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ static int	between_wall(t_data *data, int x_map, int y_map)
 		y_offset = 1;
 	else
 		y_offset = -1;
+	if (y_map + y_offset < 0 || y_map + y_offset >= data->h_map)
+		return (1);
+	if (x_map >= data->arr_width[y_map + y_offset]
+		|| x_map + x_offset < 0
+		|| x_map + x_offset >= data->arr_width[y_map])
+		return (0);
 	if ((data->map[y_map + y_offset][x_map] == '1'
 		|| data->map[y_map + y_offset][x_map] == 'D')
 		&& (data->map[y_map][x_map + x_offset] == '1'
@@ -109,7 +115,7 @@ void	get_vertical_dist(t_data *data, float angle, t_player *player, int i)
 	data->v_dist = hypotf(x_v - player->pos.x, y_v - player->pos.y);
 }
 
-void	v2_raycast(t_data *data, t_player *player, float angle)
+void	raycasting(t_data *data, t_player *player, float angle)
 {
 	int		i;
 	float	ray_angle;

@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 10:06:42 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 11:23:34 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/21 14:17:06 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ int	load_file_2(t_data *data, char *line, int fd, int *i)
 				|| md_strchr(line, 'N') || md_strchr(line, 'S')
 				|| md_strchr(line, 'E') || md_strchr(line, 'W')
 				|| md_strchr(line, 'D')))
+		{
 			if (parse_map_line(data, line, i, order))
 				return (free(line), 1);
+		}
 		if (line[0] != '\n' && !data->map[0])
 			order++;
 		free(line);
@@ -101,13 +103,13 @@ int	load_file_2(t_data *data, char *line, int fd, int *i)
 	return (0);
 }
 
-int	load_file(t_data *data, int fd)
+int	load_file(t_data *data, int fd, char *file_name)
 {
 	char	*line;
 	int		i;
 
 	line = NULL;
-	if (count_width_height(data) == 1)
+	if (count_width_height(data, file_name) == 1)
 		return (1);
 	data->map = malloc((data->h_map + 1) * sizeof(char *));
 	if (!data->map)
@@ -119,7 +121,7 @@ int	load_file(t_data *data, int fd)
 	data->map[i] = NULL;
 	if (!data->no_map.value || !data->so_map.value
 		|| !data->we_map.value || !data->ea_map.value
-		|| !data->f_color || !data->c_color || !data->map[0])
+		|| data->f_color == -1 || data->c_color == -1 || !data->map[0])
 		return (write(2, "Error\nNeed more categories\n", 27)
 			, free_str(data->map), 1);
 	return (0);

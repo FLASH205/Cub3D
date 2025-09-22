@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_draw_map.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ybahmaz <ybahmaz@student.1337.ma>          +#+  +:+       +#+        */
+/*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 09:11:18 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/08/17 16:26:49 by ybahmaz          ###   ########.fr       */
+/*   Updated: 2025/09/20 17:51:32 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,12 @@ void	ft_draw_map(t_data *data)
 
 	angle = atan2f(data->player->dir.y, data->player->dir.x);
 	angle = normalize_angle(angle - FOV / 2);
-	v2_raycast(data, data->player, angle);
+	raycasting(data, data->player, angle);
 	i = 0;
 	while (i < WIDTH)
 	{
 		dist_for_projection_plane = (WIDTH / 2) / tanf(FOV / 2);
+		correct_tex(data, i);
 		wall_strip = (SIZE / data->dist_rays[i]) * dist_for_projection_plane;
 		draw_strip(wall_strip, data, i, ft_get_start(data, i));
 		i++;

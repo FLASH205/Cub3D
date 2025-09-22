@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 17:15:22 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/19 12:42:12 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/13 16:41:45 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ long	md_atoi(const char *str)
 	i = 0;
 	sign = 1;
 	t = 0;
+	if (!str)
+		return (-1);
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')

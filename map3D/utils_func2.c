@@ -6,24 +6,24 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 12:25:56 by mradouan          #+#    #+#             */
-/*   Updated: 2025/08/19 12:42:38 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/21 14:16:38 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	is_safe_space(t_data *data, int i, int j)
+int	alloc_utils(char **str, char ***rgb)
 {
-	if (data->map[i][j + 1] && data->map[i][j + 1] != '1')
-		return (1);
-	if (j > 0 && data->map[i][j - 1] && data->map[i][j - 1] != '1')
-		return (1);
-	if (data->map[i + 1] && data->map[i + 1][j] && data->map[i + 1][j] != '1')
-		return (1);
-	if (i > 0 && data->map[i - 1] && data->map[i - 1][j]
-		&& data->map[i - 1][j] != '1')
-		return (1);
-	return (0);
+	char	*tmp;
+
+	tmp = *str;
+	tmp = md_strtrim(*str, "\n");
+	if (!tmp)
+		return (perror("Error\n"), 1);
+	*rgb = md_split(tmp, ',');
+	if (!*rgb)
+		return (perror("Error\n"), 1);
+	return (free(tmp), 0);
 }
 
 int	md_isalpha(int c)
@@ -47,8 +47,12 @@ int	md_isdigit(int c)
 int	is_not_digit(char *str)
 {
 	int	i;
+	int	len;
 
 	i = 0;
+	len = ft_strlen(str);
+	if (len > 3)
+		return (1);
 	while (str[i])
 	{
 		if (md_isdigit(str[i]) == 1)

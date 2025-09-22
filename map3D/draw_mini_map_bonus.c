@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 10:00:14 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 11:34:50 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/22 10:17:37 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,6 @@ void	draw_mini_map(t_data *data)
 	get_cordinates(data);
 	data->mini_m->center_x = VIEW_SIZE * MINI_TILE + MINI_TILE / 2;
 	data->mini_m->center_y = VIEW_SIZE * MINI_TILE + MINI_TILE / 2;
-	draw_player(data, data->mini_m->center_x - 2,
-		data->mini_m->center_y - 2, 0xfcfcfc);
+	draw_player(data, data->mini_m->center_x - 3,
+		data->mini_m->center_y - 3, 0xfcfcfc);
 }

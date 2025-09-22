@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/30 16:02:38 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 10:45:49 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/20 18:06:56 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	parsing_file(t_data *data, char *file_name)
 	fd = open(file_name, O_RDONLY, 0644);
 	if (fd == -1)
 		return (perror("Error\n"), 1);
-	if (load_file(data, fd))
+	if (load_file(data, fd, file_name))
 		return (close(fd), 1);
 	if (claim_wd_line(data))
 		return (close(fd), 1);

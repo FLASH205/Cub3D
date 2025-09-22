@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:13:44 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 13:07:59 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/20 18:07:32 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	count_width_height_helper(char *line, int fd,
 	return (0);
 }
 
-int	count_width_height(t_data *data)
+int	count_width_height(t_data *data, char *file_name)
 {
 	int		fd;
 	int		counter;
@@ -95,7 +95,7 @@ int	count_width_height(t_data *data)
 	counter = 0;
 	max_width = 0;
 	line = NULL;
-	fd = open("map.cub", O_RDONLY, 0644);
+	fd = open(file_name, O_RDONLY, 0644);
 	if (fd == -1)
 		return (perror("Error\n"), 1);
 	if (count_width_height_helper(line, fd, &counter, &max_width) == 1)

@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:38:30 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/08 09:37:48 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/21 14:21:28 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	init_elements(t_data *data)
 {
+	data->pl = "NWSE";
 	data->w_map = 0;
 	data->h_map = 0;
 	data->current = 0;
@@ -33,7 +34,7 @@ void	next_phase(t_data *data)
 {
 	ft_draw_map(data);
 	draw_mini_map(data);
-	mlx_hook(data->window, 2, 0, handle_keys, data);
+	mlx_hook(data->window, 2, 1L >> 0, handle_keys, data);
 	mlx_hook(data->window, 6, 0, handel_mouse, data);
 	mlx_hook(data->window, 17, 0, click_cross, data);
 	mlx_loop_hook(data->mlx_ptr, animation_phase, data);

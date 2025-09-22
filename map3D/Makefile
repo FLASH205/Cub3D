@@ -2,7 +2,7 @@ NAME = cub3D
 
 FLAG = -Wextra -Werror -Wall -fsanitize=address -g
 
-MLX = -L /home/mradouan/Documents/mlx -lmlx -lXext -lX11 -lm  #-lmlx -framework OpenGL -framework AppKit 
+MLX = -lmlx -framework OpenGL -framework AppKit 
 
 SRC = \
 	main.c \
@@ -11,7 +11,7 @@ SRC = \
 	get_next_line_utils.c \
 	ft_draw_map.c \
 	handle_keys.c \
-	v2_raycast.c \
+	raycasting.c \
 	get_correct_dist.c \
 	parsing_map.c \
 	free_resourses.c \
@@ -20,8 +20,8 @@ SRC = \
 	utils_func3.c \
 	utils_splite.c \
 	upload_imgs.c \
-	animation_phase_bonus.c \
-	open_close_door.c \
+	animations_bonus.c \
+	door_bonus.c \
 	load_elements.c \
 	check_if_close.c \
 	map_file_check.c \

@@ -6,11 +6,35 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 09:14:57 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/01 11:15:21 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/20 17:48:31 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	correct_tex(t_data *data, int i)
+{
+	if (!i || i == WIDTH - 1)
+		return ;
+	if (data->tex[i] == &data->door)
+		return ;
+	if (data->tex[i - 1] == &data->no_map
+		&& data->tex[i + 1] == &data->no_map
+		&& data->tex[i] != &data->no_map)
+		data->tex[i] = &data->no_map;
+	else if (data->tex[i - 1] == &data->so_map
+		&& data->tex[i + 1] == &data->so_map
+		&& data->tex[i] != &data->so_map)
+		data->tex[i] = &data->so_map;
+	else if (data->tex[i - 1] == &data->we_map
+		&& data->tex[i + 1] == &data->we_map
+		&& data->tex[i] != &data->we_map)
+		data->tex[i] = &data->we_map;
+	else if (data->tex[i - 1] == &data->ea_map
+		&& data->tex[i + 1] == &data->ea_map
+		&& data->tex[i] != &data->ea_map)
+		data->tex[i] = &data->ea_map;
+}
 
 static float	vertical_dist(int i, float angle,
 	t_player *player, t_data *data)

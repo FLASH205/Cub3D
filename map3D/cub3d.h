@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 10:32:05 by ybahmaz           #+#    #+#             */
-/*   Updated: 2025/09/08 09:32:08 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/22 10:19:02 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 # define CUB3D_H
 
 # include <unistd.h>
-// # Check space in the last
-# include "/home/mradouan/Documents/mlx/mlx.h"
-// # include "mlx.h"
+# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -32,20 +30,20 @@
 # define PLAYER_RADIUS 6
 # define ESC 53
 # define P_SPEED 5
-# define ROT_SPEED 2.5
+# define ROT_SPEED 0.05
 # define SIZE 32
 # define F_KEY 3
-# define TILE_SIZE 32 //Size of minimap
-# define PLAYER_SIZE 8 //Size of minimap
-# define MINI_TILE 15 //Size of minimap
-# define VIEW_SIZE 5 //Size of view
+# define TILE_SIZE 32
+# define PLAYER_SIZE 8
+# define MINI_TILE 15
+# define VIEW_SIZE 5
 # define UP 13
 # define DOWN 1
 # define RIGHT 2
 # define LEFT 0
 # define A_LEFT 123
 # define A_RIGHT 124
-# define FOV 1.04719755 // 60 degree
+# define FOV 1.04719755
 # define RAY_STEP 1
 # define WIDTH 1504
 # define HEIGHT 768
@@ -55,7 +53,7 @@ typedef struct s_image
 	void	*img;
 	char	*addr;
 	char	*value;
-	int		bpp;	//*	bit_per_pixel
+	int		bpp;
 	int		l_size;
 	int		width;
 	int		height;
@@ -100,6 +98,7 @@ typedef struct s_data
 	int			w_map;
 	int			h_map;
 	int			*arr_width;
+	char		*pl;
 	t_image		no_map;
 	t_image		so_map;
 	t_image		we_map;
@@ -112,17 +111,15 @@ typedef struct s_data
 	int			add_y;
 	int			current;
 	int			is_door;
-	float		hit_x[WIDTH]; // horizontal
-	float		hit_y[WIDTH]; // vertical
+	float		hit_x[WIDTH];
+	float		hit_y[WIDTH];
 	float		h_dist;
 	float		v_dist;
 	t_minimap	*mini_m;
 	t_player	*player;
 	t_image		*image;
-	// int			is_vertical[WIDTH];
 	int			is_horizontal[WIDTH];
 	float		dist_rays[WIDTH];
-	// int			color[WIDTH];
 	t_image		frames[NUM_PIC];
 	t_image		lod[NUM_PIC_LOD];
 }	t_data;
@@ -139,25 +136,24 @@ int		click_cross(t_data *data);
 int		handle_keys(int key, t_data *data);
 void	init_map(t_data *data);
 int		create_new_img(t_data *data, t_image *image);
-void	v2_raycast(t_data *data, t_player *player, float angle);
+void	rotate_player(t_player *player, float angle);
+void	raycasting(t_data *data, t_player *player, float angle);
 float	get_correct_distance(t_data *data, t_player *player,
 			int i, float angle);
+void	correct_tex(t_data *data, int i);
 void	ft_put_pixel(t_image *image, int color, int x, int y);
 float	normalize_angle(float angle);
 int		set_frames(t_data *data);
 int		animation_phase(t_data *data);
 void	open_close_door(t_data *data, t_player *player);
 
-//                         MOHA FUNCTIONS
-
 int		parsing_file(t_data *data, char *file_name);
 char	*parse_direction(char *line);
-int		load_file(t_data *data, int fd);
-int		is_safe_space(t_data *data, int i, int j);
+int		load_file(t_data *data, int fd, char *file_name);
 int		check_if_closed(t_data *data);
 int		name_file_check(char *file_name);
 int		claim_wd_line(t_data *data);
-int		count_width_height(t_data *data);
+int		count_width_height(t_data *data, char *file_name);
 int		check_component(t_data *data);
 int		check_new_line(char *filename);
 int		check_door(t_data *data);
@@ -167,14 +163,12 @@ char	*parse_direction(char *line);
 char	*number_frames(char *path);
 int		set_imgs(t_data *data);
 void	draw_mini_map(t_data *data);
-char	*num_frames(int i, char *path);
-void	claim_view(t_data *data);
-void	draw_player_mini(t_data *data);
 int		handel_mouse(int x, int y, t_data *data);
 char	**md_split(char const *s, char c);
 int		md_strncmp(const char *s1, const char *s2, size_t n);
 size_t	md_strlcpy(char *dst, const char *src, size_t dstsize);
 char	*md_strtrim(char *s1, char *set);
+int		alloc_utils(char **str, char ***rgb);
 int		md_strchr(const char *s, int c);
 int		is_only_spaces(char *s);
 int		md_isdigit(int c);
@@ -184,6 +178,5 @@ long	md_atoi(const char *str);
 char	*md_itoa(int n);
 int		ft_puthex(unsigned long num, char *base);
 void	free_str(char **str);
-void	free_int(int *num);
 
 #endif

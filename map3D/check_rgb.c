@@ -6,24 +6,24 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 11:33:55 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/08 10:56:35 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/21 15:27:52 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	alloc_utils(char **str, char ***rgb)
+int	check_alloc(char **str)
 {
-	char *tmp;
+	int	i;
 
-	tmp = *str;
-	tmp = md_strtrim(*str, "\n");
-	if (!tmp)
-		return (perror("Error\n"), 1);
-	*rgb = md_split(tmp, ',');
-	if (!*rgb)
-		return (perror("Error\n"), 1);
-	return (free(tmp), 0);
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	if (i < 3)
+		return (1);
+	return (0);
 }
 
 int	convert_to_hex(char *str)
@@ -40,16 +40,18 @@ int	convert_to_hex(char *str)
 	while (rgb[i])
 	{
 		if (is_not_digit(rgb[i]) == 1)
-			return (write(2, "Error\nnot digit\n", 16),
+			return (write(2, "Error\nnot suitable digit\n", 25),
 				free_str(rgb), -1);
 		i++;
 	}
+	if (check_alloc(rgb) == 1)
+		return (free_str(rgb), -1);
 	r_color = md_atoi(rgb[0]);
 	g_color = md_atoi(rgb[1]);
 	b_color = md_atoi(rgb[2]);
-	if (r_color > 255 || g_color > 255 || b_color > 255)
-		return (write(2, "Error\nThe number must be between 0-255\n", 39),
-			free_str(rgb), -1);
+	if (r_color > 255 || g_color > 255 || b_color > 255
+		|| r_color == -1 || g_color == -1 || b_color == -1)
+		return (write(2, "Error\nbetween 0-255\n", 20), free_str(rgb), -1);
 	return (free_str(rgb), (r_color << 16) | (g_color << 8) | b_color);
 }
 
@@ -97,15 +99,15 @@ int	parse_rgb(char *line)
 	if (!md_strncmp(line, "F", 1) || !md_strncmp(line, "C", 1))
 	{
 		if (!check_first_digits(line, &i))
-			return (0);
+			return (-1);
 		str = ft_strdup(line + i);
 		if (!str)
 			return (perror("Error\n"), 1);
 		if (!check_commas(line, str, i))
-			return (0);
+			return (-1);
 	}
 	hex = convert_to_hex(str);
 	if (hex == -1)
-		return (free(str), 0);
+		return (free(str), -1);
 	return (free(str), hex);
 }

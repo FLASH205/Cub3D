@@ -6,7 +6,7 @@
 /*   By: mradouan <mradouan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 11:00:47 by mradouan          #+#    #+#             */
-/*   Updated: 2025/09/01 11:04:06 by mradouan         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:00:42 by mradouan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ int	is_valid_door(char **map, int i, int j)
 	if (map[i - 1] && map[i + 1]
 		&& map[i - 1][j] == '1' && map[i + 1][j] == '1')
 		return (1);
+	if ((map[i - 1] && map[i + 1])
+		&& ((map[i - 1][j] == ' ') || (map[i + 1][j] == ' ')))
+		return (0);
+	if (!map[i - 1][j] || !map[i + 1][j])
+		return (0);
 	if (j > 0 && map[i][j - 1] && map[i][j + 1]
 		&& map[i][j - 1] == '1' && map[i][j + 1] == '1')
 		return (1);
