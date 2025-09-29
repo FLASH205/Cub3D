@@ -108,9 +108,6 @@ This project is for educational purposes as part of the 42 curriculum and follow
 ```bash
 make && ./cub3D path/to/map.cub
 ```
-## Note !!
-- Please Download mlx library to compile the project.
-
 ## Clean Project
 ```bash
 make clean      # remove object files
