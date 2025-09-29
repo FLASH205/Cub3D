@@ -93,9 +93,9 @@ Manage event-driven programming
 
 Improve code organization, error handling, and memory management
 
-👨‍💻 Authors
+### 👨‍💻 Authors
 Mohammed Radouani
-youssef bahmaz
+Youssef Bahmaz
 
 
 Project developed at 42 Network
@@ -108,7 +108,7 @@ This project is for educational purposes as part of the 42 curriculum and follow
 ```bash
 make && ./cub3D path/to/map.cub
 ```
-## Clean Project
+### Clean Project
 ```bash
 make clean      # remove object files
 make fclean     # remove object files and binary
