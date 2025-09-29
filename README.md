@@ -84,17 +84,6 @@ C 225,30,0
 - `MiniLibX` library (included or system-installed)
 - `libft` (included in `./libft/`)
 
-### Compile the Project
-
-```bash
-make
-Run the Game
-./cub3D path/to/map.cub
-Clean Project
-
-make clean      # remove object files
-make fclean     # remove object files and binary
-make re         # rebuild everything
 🧠 Learning Objectives
 Deepen understanding of 2D to 3D projection
 
@@ -113,3 +102,18 @@ Project developed at 42 Network
 
 📄 License
 This project is for educational purposes as part of the 42 curriculum and follows fair use principles for any referenced material.
+
+### Compile & Run The Project
+
+```bash
+make && ./cub3D path/to/map.cub
+```
+## Note !!
+- Please Download mlx library to compile the project.
+
+## Clean Project
+```bash
+make clean      # remove object files
+make fclean     # remove object files and binary
+make re         # rebuild everything
+
