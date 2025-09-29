@@ -37,23 +37,23 @@ This project demonstrates fundamental concepts in:
 
 ### 🗺️ `.cub` Scene File Format
 
-The scene file describes:
-- Texture paths for all wall directions (NO, SO, WE, EA)
-- Floor and ceiling colors (`F`, `C`)
-- A 2D map using characters: `1` (wall), `0` (empty), `N/S/E/W` (player start position)
+The scene file describes:<br>
+- Texture paths for all wall directions (NO, SO, WE, EA)<br>
+- Floor and ceiling colors (`F`, `C`)<br>
+- A 2D map using characters: `1` (wall), `0` (empty), `N/S/E/W` (player start position)<br>
 
-Example:
-NO ./textures/north.xpm
-SO ./textures/south.xpm
-WE ./textures/west.xpm
-EA ./textures/east.xpm
-F 220,100,0
-C 225,30,0
+Example:<br>
+NO ./textures/north.xpm<br>
+SO ./textures/south.xpm<br>
+WE ./textures/west.xpm<br>
+EA ./textures/east.xpm<br>
+F 220,100,0<br>
+C 225,30,0<br>
 
-111111
-100001
-1000N1
-111111
+111111<br>
+100001<br>
+1000N1<br>
+111111<br>
 
 ### ❗ Error Handling
 - The program exits with `Error\n` and a clear message for:
@@ -65,7 +65,7 @@ C 225,30,0
 
 ## 🚀 Bonus Features (If Implemented)
 
-> Bonuses are only evaluated if the mandatory part is perfect.
+> Bonuses are only evaluated if the mandatory part is perfect.<br>
 
 - [ ] Wall collisions
 - [ ] Minimap system
@@ -84,21 +84,21 @@ C 225,30,0
 - `MiniLibX` library (included or system-installed)
 - `libft` (included in `./libft/`)
 
-🧠 Learning Objectives
-Deepen understanding of 2D to 3D projection
+### 🧠 Learning Objectives
+Deepen understanding of 2D to 3D projection<br>
 
-Apply math and geometry in real-time applications
+Apply math and geometry in real-time applications<br>
 
-Manage event-driven programming
+Manage event-driven programming<br>
 
-Improve code organization, error handling, and memory management
+Improve code organization, error handling, and memory management<br>
 
 ### 👨‍💻 Authors
 Mohammed Radouani<br>
-Youssef Bahmaz
+Youssef Bahmaz<br>
 
 
-Project developed at 42 Network
+Project developed at 42 Network<br>
 
 📄 License
 This project is for educational purposes as part of the 42 curriculum and follows fair use principles for any referenced material.
