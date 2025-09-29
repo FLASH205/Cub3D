@@ -94,7 +94,7 @@ Manage event-driven programming
 Improve code organization, error handling, and memory management
 
 ### 👨‍💻 Authors
-Mohammed Radouani
+Mohammed Radouani<br>
 Youssef Bahmaz
 
 
